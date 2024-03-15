@@ -30,15 +30,6 @@ const Icon = styled.button`
   padding: 0rem 1rem;
 `;
 
-// //현재 페이지를 나타내는 원을 위한 스타일 컴포넌트
-// const ActiveIndicator = styled.div`
-//   width: 4rem;
-//   height: 3.2rem;
-//   border-radius: 1.5rem;
-//   background-color: ${(props) => props.theme.colors.green};
-//   position: absolute;
-// `;
-
 const Footer = () => {
   const navigate = useNavigate();
   const location = useLocation(); // 현재 경로 가져오기
