@@ -22,7 +22,7 @@ const FooterContainer = styled.div`
 const Icon = styled.button`
   font-size: 2.5rem;
   font-family: 'Material Symbols Outlined', sans-serif;
-  color: ${(props) => (props.active ? '#ffffff' : props.theme.colors.green)};
+  color: ${(props) => (props.active ? '#FFFFFFCC' : props.theme.colors.green)};
   background-color: ${(props) => (props.active ? props.theme.colors.green : 'transparent')};
   cursor: pointer;
   border: 0;
