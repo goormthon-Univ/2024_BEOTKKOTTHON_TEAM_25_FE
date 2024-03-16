@@ -2,15 +2,15 @@ import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
 const HeaderContainer = styled.div`
-  font-family: 'SUITE-Bold', sans-serif;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin-top: 2.8rem;
   padding: 0.5rem 1.3rem;
   background-color: #ffffff;
+  font-family: 'SUITE-Bold', sans-serif;
   color: #000000;
-  margin-top: 2.8rem;
 `;
 
 const LeftContainer = styled.div`
@@ -26,13 +26,13 @@ const Text = styled.div`
 `;
 
 const Icon = styled.button`
-  font-size: 2rem;
-  font-family: 'Material Symbols Outlined', sans-serif;
-  color: ${(props) => props.theme.colors.green};
-  cursor: pointer;
   padding-left: 0.5rem;
   border: 0;
   background: transparent;
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 2rem;
+  color: ${(props) => props.theme.colors.green};
+  cursor: pointer;
 `;
 
 const PointContainer = styled.div`
@@ -40,13 +40,13 @@ const PointContainer = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: end;
-  font-size: 20px;
-  font-weight: bold;
-  background-color: ${(props) => props.theme.colors.lightOrange};
   padding-right: 1.5rem;
+  border-style: solid;
   border-radius: 1.5rem;
   border-color: ${(props) => props.theme.colors.orange};
-  border-style: solid;
+  background-color: ${(props) => props.theme.colors.lightOrange};
+  font-size: 20px;
+  font-weight: bold;
 `;
 
 const Point = styled.div`
@@ -54,14 +54,14 @@ const Point = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: end;
+  padding-left: 0.9rem;
   font-size: 20px;
   font-weight: bold;
-  padding-left: 0.9rem;
 `;
 
 const IconWrapper = styled.div`
-  color: ${(props) => props.theme.colors.orange};
   font-family: 'Material Symbols Outlined', sans-serif;
+  color: ${(props) => props.theme.colors.orange};
   cursor: default;
 `;
 
