@@ -8,6 +8,7 @@ const FooterPosition = styled.div`
   width: 100%;
   height: 5rem;
 `;
+
 const FooterContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -22,8 +23,8 @@ const FooterContainer = styled.div`
 const Icon = styled.button`
   font-size: 2.5rem;
   font-family: 'Material Symbols Outlined', sans-serif;
-  color: ${(props) => (props.active ? '#FFFFFFCC' : props.theme.colors.green)};
-  background-color: ${(props) => (props.active ? props.theme.colors.green : 'transparent')};
+  color: ${(props) => (props.$active ? '#FFFFFFCC' : props.theme.colors.green)};
+  background-color: ${(props) => (props.$active ? props.theme.colors.green : 'transparent')};
   cursor: pointer;
   border: 0;
   border-radius: 1.5rem;
@@ -50,16 +51,16 @@ const Footer = () => {
   return (
     <FooterPosition>
       <FooterContainer>
-        <Icon onClick={handleClickHome} active={location.pathname === '/home'}>
+        <Icon onClick={handleClickHome} $active={location.pathname === '/home'}>
           home
         </Icon>
-        <Icon onClick={handleClickRecords} active={location.pathname === '/records'}>
+        <Icon onClick={handleClickRecords} $active={location.pathname === '/records'}>
           photo_library
         </Icon>
-        <Icon onClick={handleClickFriends} active={location.pathname === '/friends'}>
+        <Icon onClick={handleClickFriends} $active={location.pathname === '/friends'}>
           group
         </Icon>
-        <Icon onClick={handleClickMyPage} active={location.pathname === '/mypage'}>
+        <Icon onClick={handleClickMyPage} $active={location.pathname === '/mypage'}>
           account_circle
         </Icon>
       </FooterContainer>

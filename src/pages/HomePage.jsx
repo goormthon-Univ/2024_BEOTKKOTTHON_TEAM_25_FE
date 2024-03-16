@@ -1,10 +1,11 @@
-import Header from '../components/common/layout/Header';
+import { Header, Footer } from '../components/common/layout';
 
 const HomePage = () => {
   return (
     <main>
       <Header />
       HomePage
+      <Footer />
     </main>
   );
 };
