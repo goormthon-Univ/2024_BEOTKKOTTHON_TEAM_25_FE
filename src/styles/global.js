@@ -35,6 +35,10 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     src: url(https://fonts.gstatic.com/s/materialsymbolsoutlined/v167/kJF1BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzByHX9rA6RzaxHMPdY43zj-jCxv3fzvRNU22ZXGJpEpjC_1v-p_4MrImHCIJIZrDCvHOej.woff2) format('woff2');
   }
+
+  body {
+    margin: 0;
+  }
 `;
 
 export default GlobalStyle;
