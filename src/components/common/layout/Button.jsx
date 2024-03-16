@@ -27,27 +27,28 @@ const StyledButton = styled.button`
       : ''};
   border: ${({ border }) => (border ? '1px solid' : 'none')};
   border-color: ${({ theme, border }) => theme.colors[border] || '#000000'};
-  background-color: ${({ theme, bgColor }) => theme.colors[bgColor] || '#FFFFFF'};
-  color: ${({ theme, textColor }) => theme.colors[textColor] || '#FFFFFF'};
+  background-color: ${({ theme, $bgColor }) => theme.colors[$bgColor] || '#FFFFFF'};
+  color: ${({ theme, $textColor }) => theme.colors[$textColor] || '#FFFFFF'};
 
   cursor: pointer;
   text-align: center;
 `;
 
-const Button = ({ children, bgColor, textColor, size, border }) => {
+const Button = ({ children, $bgColor, $textColor, size, border }) => {
   return (
     <div>
-      <StyledButton bgColor={bgColor} textColor={textColor} size={size} border={border}>
+      <StyledButton $bgColor={$bgColor} $textColor={$textColor} size={size} border={border}>
         <div>{children}</div>
       </StyledButton>
     </div>
   );
 };
+
 Button.propTypes = {
   children: PropTypes.node.isRequired,
   size: PropTypes.oneOf(['small', 'medium', 'large']),
-  textColor: PropTypes.string,
-  bgColor: PropTypes.string,
+  $textColor: PropTypes.string,
+  $bgColor: PropTypes.string,
   border: PropTypes.string,
 };
 
