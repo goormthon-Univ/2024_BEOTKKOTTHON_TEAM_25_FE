@@ -6,9 +6,11 @@ const StyledButton = styled.button`
     size === 'large' ? '20.3rem' : size === 'medium' ? '6rem' : size === 'small' ? '4.12rem' : ''};
   height: ${({ size }) =>
     size === 'large' ? '3.6rem' : size === 'medium' ? '2.8rem' : size === 'small' ? '2.3rem' : ''};
-
+  border: ${({ border }) => (border ? '1px solid' : 'none')};
+  border-color: ${({ theme, border }) => theme.colors[border] || '#000000'};
   border-radius: ${({ size }) =>
     size === 'large' ? '0.8rem' : size === 'medium' ? '0.8rem' : size === 'small' ? '1.2rem' : ''};
+  background-color: ${({ theme, $bgColor }) => theme.colors[$bgColor] || '#FFFFFF'};
   font-size: ${({ size }) =>
     size === 'large'
       ? '1.25rem'
@@ -25,13 +27,9 @@ const StyledButton = styled.button`
       : size === 'small'
       ? "'SUITE-Bold', sans-serif"
       : ''};
-  border: ${({ border }) => (border ? '1px solid' : 'none')};
-  border-color: ${({ theme, border }) => theme.colors[border] || '#000000'};
-  background-color: ${({ theme, $bgColor }) => theme.colors[$bgColor] || '#FFFFFF'};
   color: ${({ theme, $textColor }) => theme.colors[$textColor] || '#FFFFFF'};
-
-  cursor: pointer;
   text-align: center;
+  cursor: pointer;
 `;
 
 const Button = ({ children, $bgColor, $textColor, size, border }) => {
