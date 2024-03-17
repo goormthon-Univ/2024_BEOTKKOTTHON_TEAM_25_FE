@@ -36,11 +36,9 @@ const StyledButton = styled.button`
 
 const Button = ({ children, $bgColor, $textColor, size, border }) => {
   return (
-    <div>
-      <StyledButton $bgColor={$bgColor} $textColor={$textColor} size={size} border={border}>
-        <div>{children}</div>
-      </StyledButton>
-    </div>
+    <StyledButton $bgColor={$bgColor} $textColor={$textColor} size={size} border={border}>
+      <div>{children}</div>
+    </StyledButton>
   );
 };
 
