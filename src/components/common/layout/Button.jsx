@@ -32,9 +32,15 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-const Button = ({ children, $bgColor, $textColor, size, border }) => {
+const Button = ({ children, $bgColor, $textColor, size, border, onClick }) => {
   return (
-    <StyledButton $bgColor={$bgColor} $textColor={$textColor} size={size} border={border}>
+    <StyledButton
+      $bgColor={$bgColor}
+      $textColor={$textColor}
+      size={size}
+      border={border}
+      onClick={onClick}
+    >
       <div>{children}</div>
     </StyledButton>
   );
@@ -46,6 +52,7 @@ Button.propTypes = {
   $textColor: PropTypes.string,
   $bgColor: PropTypes.string,
   border: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default Button;
