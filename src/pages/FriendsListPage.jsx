@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import { Header, Footer, Button, Modal } from '../components/common/layout';
+import ScreenBackground from '../assets/img/ScreenBackground.png';
 
 const FriendsListPage = () => {
   const [isInviteModalOpen, setInviteModalOpen] = useState(false);
@@ -118,7 +119,7 @@ const FriendListPage = styled.div`
   align-items: center;
   height: 700px;
   padding: 0 1.5rem;
-  /* background-image: url(배경 텍스쳐 입히기); */
+  background-image: url(${ScreenBackground});
   font-family: 'SUITE-Medium', sans-serif;
   color: #ffffff;
 `;
