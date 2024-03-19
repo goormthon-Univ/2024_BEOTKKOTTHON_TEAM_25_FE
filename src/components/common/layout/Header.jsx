@@ -77,7 +77,7 @@ const Header = () => {
   };
 
   const determineHeader = () => {
-    if (location.pathname === '/records' || location.pathname === '/매일의미션페이지')
+    if (location.pathname === '/records' || location.pathname === '/daily-mission')
       return (
         <HeaderContainer>
           <LeftContainer>
