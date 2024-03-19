@@ -1,4 +1,5 @@
 export { default as CharacterNameSettingPage } from './CharacterNameSettingPage';
+export { default as DailyMissonPage } from './DailyMissionPage';
 export { default as FriendsPage } from './FriendsPage';
 export { default as HomePage } from './HomePage';
 export { default as LoginPage } from './LoginPage';

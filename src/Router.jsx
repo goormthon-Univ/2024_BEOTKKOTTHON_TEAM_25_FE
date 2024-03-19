@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import {
   CharacterNameSettingPage,
+  DailyMissonPage,
   FriendsPage,
   HomePage,
   LoginPage,
@@ -14,6 +15,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path='/character-name-setting' element={<CharacterNameSettingPage />} />
+        <Route path='/daily-mission' element={<DailyMissonPage />} />
         <Route path='/friends' element={<FriendsPage />} />
         <Route path='/' element={<div>🌏 온 지구 : Own Earth 🌏</div>} />
         <Route path='/home' element={<HomePage />} />

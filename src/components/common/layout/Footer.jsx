@@ -18,6 +18,7 @@ const FooterContainer = styled.div`
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
   box-shadow: 0px 0.25rem 0.75rem rgba(0, 0, 0, 0.25);
+  background-color: white;
 `;
 
 const Icon = styled.button`
