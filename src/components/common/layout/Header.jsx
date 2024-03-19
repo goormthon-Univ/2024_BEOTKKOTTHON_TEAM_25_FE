@@ -64,7 +64,6 @@ const IconWrapper = styled.div`
   cursor: default;
 `;
 
-// Header component
 const Header = () => {
   const navigate = useNavigate();
 
@@ -120,7 +119,7 @@ const Header = () => {
           <Icon onClick={handleClickStore}>storefront</Icon>
         </HeaderContainer>
       );
-    else if (location.pathname === '/친구목록')
+    else if (location.pathname === '/friends-list')
       return (
         <HeaderContainer>
           <LeftContainer>
