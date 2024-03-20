@@ -55,8 +55,8 @@ const Header = () => {
             <LeftContainer>
               <ButtonWrapper onClick={handleClickBack}>
                 <Icon>arrow_back_ios</Icon>
-                Own Earth
               </ButtonWrapper>
+              오늘의 미션
             </LeftContainer>
           </HeaderContainer>
         );
