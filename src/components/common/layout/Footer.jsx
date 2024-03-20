@@ -1,36 +1,5 @@
-import styled from 'styled-components';
 import { useNavigate, useLocation } from 'react-router-dom';
-
-const FooterPosition = styled.div`
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 4rem;
-`;
-
-const FooterContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  padding: 0.5rem 1.3rem;
-  border-top-left-radius: 1.5rem;
-  border-top-right-radius: 1.5rem;
-  box-shadow: 0px 0.25rem 0.75rem rgba(0, 0, 0, 0.25);
-  background-color: white;
-`;
-
-const Icon = styled.button`
-  font-size: 2.5rem;
-  font-family: 'Material Symbols Outlined', sans-serif;
-  color: ${(props) => (props.$active ? '#FFFFFFCC' : props.theme.colors.green)};
-  background-color: ${(props) => (props.$active ? props.theme.colors.green : 'transparent')};
-  cursor: pointer;
-  border: 0;
-  border-radius: 1.5rem;
-  padding: 0rem 1rem;
-`;
+import styled from 'styled-components';
 
 const Footer = () => {
   const navigate = useNavigate();
@@ -45,8 +14,8 @@ const Footer = () => {
   const handleClickFriends = () => {
     navigate('/friends');
   };
-  const handleClickMyPage = () => {
-    navigate('/mypage');
+  const handleClickStore = () => {
+    navigate('/store');
   };
 
   return (
@@ -61,12 +30,43 @@ const Footer = () => {
         <Icon onClick={handleClickFriends} $active={location.pathname === '/friends'}>
           group
         </Icon>
-        <Icon onClick={handleClickMyPage} $active={location.pathname === '/mypage'}>
-          account_circle
+        <Icon onClick={handleClickStore} $active={location.pathname === '/store'}>
+          storefront
         </Icon>
       </FooterContainer>
     </FooterPosition>
   );
 };
+
+const FooterPosition = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 3.5rem;
+`;
+
+const FooterContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0.5rem 1.2rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
+  box-shadow: 0px 0.25rem 0.75rem rgba(0, 0, 0, 0.25);
+  background-color: white;
+`;
+
+const Icon = styled.button`
+  padding: 0rem 0.7rem;
+  border: 0;
+  border-radius: 1.5rem;
+  background-color: ${(props) => (props.$active ? props.theme.colors.green : 'transparent')};
+  cursor: pointer;
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 2rem;
+  color: ${(props) => (props.$active ? '#FFFFFFCC' : props.theme.colors.green)};
+`;
 
 export default Footer;
