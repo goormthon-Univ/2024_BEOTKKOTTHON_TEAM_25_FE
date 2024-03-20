@@ -109,7 +109,12 @@ const Header = () => {
           </HeaderContainer>
         );
 
-      case '/상점': // /store 라우트 지정해주세요
+      case '/store':
+      case '/store/0':
+      case '/store/1':
+      case '/store/2':
+      case '/store/3':
+      case '/store/4':
         return (
           <HeaderContainer>
             <LeftContainer>

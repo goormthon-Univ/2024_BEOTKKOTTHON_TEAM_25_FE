@@ -9,6 +9,8 @@ import {
   MyPage,
   OnboardingPage,
   Recordspage,
+  StorePage,
+  StoreDetailPage,
 } from './pages';
 
 const Router = () => {
@@ -25,6 +27,8 @@ const Router = () => {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/onboarding' element={<OnboardingPage />} />
         <Route path='/records' element={<Recordspage />} />
+        <Route path='/store' element={<StorePage />} />
+        <Route path='/store/:categoryId' element={<StoreDetailPage />} />
       </Routes>
     </BrowserRouter>
   );
