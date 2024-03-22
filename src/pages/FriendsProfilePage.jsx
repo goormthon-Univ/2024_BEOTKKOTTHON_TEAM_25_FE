@@ -54,7 +54,7 @@ const FriendsProfilePage = () => {
             // map 함수를 사용하여 각 요일마다 컴포넌트 렌더링
             <WeeklyContainer key={index}>
               {day.name}
-              <WeeklyCircle iscompleted={day.completed} />
+              <WeeklyCircle isCompleted={day.completed} />
             </WeeklyContainer>
           ))}
         </WeeklyBox>
