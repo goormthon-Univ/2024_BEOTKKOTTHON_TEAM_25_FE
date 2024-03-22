@@ -1,25 +1,8 @@
 import { useState } from 'react';
-import Modal from 'react-modal';
 import styled from 'styled-components';
 
-import { Header } from '../components/common/layout';
-import Button from '../components/common/layout/Button';
-import ScreenBackground from '../assets/img/ScreenBackground.png';
-
-const customStyles = {
-  content: {
-    position: 'relative',
-    top: '30%',
-    right: '0%',
-    left: '10%',
-    width: '270px',
-    height: '168px',
-    border: 'none',
-    borderRadius: '20px',
-    backgroundColor: 'white',
-    boxShadow: '2px 2px 2px 2px rgba(0, 0, 0, 0.2)',
-  },
-};
+import { Header, Button, Modal } from '../components/common/layout';
+import Texture from '../assets/img/ScreenBackground.png';
 
 const DailyMissonPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,29 +16,23 @@ const DailyMissonPage = () => {
   };
 
   return (
-    <Layout>
+    <>
       <Header />
-      <ElementWrapper>
-        <BlueBox>
-          <DaliyMissionWrapper>
-            <DailyMissionText>오늘의 미션!</DailyMissionText>
-          </DaliyMissionWrapper>
-          <MissionWrapper>
-            <MissionText>{/* 미션 문구 */}</MissionText>
-          </MissionWrapper>
-        </BlueBox>
-        <TipWrapper>{/* 팁 문구 */}</TipWrapper>
-        <ButtonWrapper>
-          <Button $bgColor={'orange'} $textColor={'white'} size={'large'}>
-            🏞️ 사진 업로드
-          </Button>
-        </ButtonWrapper>
+      <Layout>
+        <DailyMissionContainer>
+          <MissionContainer>
+            <DailyMissionTitle>오늘의 미션!</DailyMissionTitle>
+            <MissionText>커피나 음료를 마실 때 텀블러 사용해주세요.</MissionText>
+          </MissionContainer>
+        </DailyMissionContainer>
+        <TipText>tip ) 미션을 하는 행동과 사물이 잘 보이게 찍어주세요!</TipText>
+        <Button $bgColor={'orange'} $textColor={'white'} size={'large'}>
+          🏞️ 사진 업로드
+        </Button>
         {/* 기능 구현 불가 */}
-        {/* <ButtonWrapper>
-          <Button $bgColor={'orange'} $textColor={'white'} size={'large'}>
+        {/* <Button $bgColor={'orange'} $textColor={'white'} size={'large'}>
             📸 바로 촬영하기
-          </Button>
-        </ButtonWrapper> */}
+          </Button> */}
         <ButtonWrapper>
           <Button
             $bgColor={'orange'}
@@ -65,109 +42,116 @@ const DailyMissonPage = () => {
           >
             💬 미션 변경하기
           </Button>
-          <Modal isOpen={isModalOpen} onRequestClose={handleCloseModal} style={customStyles}>
-            <ModalTitle>미션을 변경하시겠습니까?</ModalTitle>
-            <ModalExplain>최초 1회 무료 변경 이후에</ModalExplain>
-            <ModalExplain>추가 변경 시 10포인트 차감됩니다!</ModalExplain>
-            <ModalButtonWrapper>
-              <Button $bgColor={'blue'} $textColor={'white'} size={'medium'} border={''}>
-                예
-              </Button>
-              <Button
-                $bgColor={'blue'}
-                $textColor={'white'}
-                size={'medium'}
-                border={''}
-                onClick={handleCloseModal}
-              >
-                아니오
-              </Button>
-            </ModalButtonWrapper>
-          </Modal>
         </ButtonWrapper>
-      </ElementWrapper>
-    </Layout>
+        <Modal isOpen={isModalOpen} onRequestClose={handleCloseModal}>
+          <ModalTitle>
+            <BoldText>미션을 변경</BoldText>하시겠습니까?
+          </ModalTitle>
+          <ModalExplainText>
+            최초 1회 무료 변경 이후에{'\n'}추가 변경 시 10포인트 차감됩니다!
+          </ModalExplainText>
+          <ModalButtonWrapper>
+            <Button
+              $bgColor={'blue'}
+              $textColor={'white'}
+              size={'medium'}
+              onClick={'미션변경 기능'}
+            >
+              예
+            </Button>
+            <Button
+              $bgColor={'blue'}
+              $textColor={'white'}
+              size={'medium'}
+              onClick={handleCloseModal}
+            >
+              아니오
+            </Button>
+          </ModalButtonWrapper>
+        </Modal>
+      </Layout>
+    </>
   );
 };
 
 const Layout = styled.div`
-  position: relative;
-  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   height: 100vh;
-  background-image: url(${ScreenBackground});
+  padding-top: 9.5rem;
+  background-image: url(${Texture});
 `;
 
-const ElementWrapper = styled.main`
-  position: absolute;
-  top: 20%;
-  left: 50%;
-  transform: translateX(-50%);
+const DailyMissionContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 1rem;
+  text-align: center;
 `;
 
-const BlueBox = styled.div`
-  position: relative;
-  width: 20.3rem;
-  height: 130px;
-  border-radius: 20px;
+const MissionContainer = styled.div`
+  max-width: 90%;
+  padding: 1.5rem 1rem;
+  border-radius: 0.9rem;
+  box-shadow: 0px 0.25rem 0.75rem rgba(0, 0, 0, 0.25);
   background-color: ${(props) => props.theme.colors.blue};
   color: white;
 `;
 
-const TipWrapper = styled.div`
-  width: 20.3rem;
-  padding-top: 5px;
+const DailyMissionTitle = styled.div`
+  padding-bottom: 0.5rem;
   font-family: 'SUITE-Light';
-  color: ${(props) => props.theme.colors.blue};
-  text-align: right;
-`;
-
-const DaliyMissionWrapper = styled.div`
-  position: absolute;
-  top: 25%;
-  width: 100%;
-  text-align: center;
-`;
-
-const DailyMissionText = styled.div`
-  font-family: 'SUITE-Light';
-  font-size: 24px;
-`;
-
-const MissionWrapper = styled.div`
-  position: absolute;
-  top: 55%;
-  width: 100%;
-  text-align: center;
+  font-size: 1.5rem;
 `;
 
 const MissionText = styled.div`
   font-family: 'SUITE-SemiBold';
-  font-size: 24px;
+  font-size: 1.5rem;
+  white-space: pre-wrap;
+`;
+
+const TipText = styled.div`
+  padding-top: 3.5rem;
+  padding-bottom: 0.5rem;
+  font-family: 'SUITE-Light', sans-serif;
+  font-size: 0.9rem;
+  color: ${(props) => props.theme.colors.blue};
 `;
 
 const ButtonWrapper = styled.div`
-  margin: 30px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 15%;
 `;
 
 const ModalTitle = styled.div`
-  padding: 20px 0;
-  font-family: 'SUITE-SemiBold';
-  font-size: 20px;
+  padding-top: 1rem;
+  font-family: 'SUITE-Regular', sans-serif;
+  font-size: 1.2rem;
   text-align: center;
 `;
 
-const ModalExplain = styled.div`
-  padding: 1px;
+const BoldText = styled.span`
+  font-family: 'SUITE-SemiBold', sans-serif;
+`;
+
+const ModalExplainText = styled.div`
+  padding-top: 1rem;
   font-family: 'SUITE-Regular';
-  font-size: 11px;
+  font-size: 0.7rem;
   text-align: center;
+  white-space: pre-wrap;
 `;
 
 const ModalButtonWrapper = styled.div`
   display: flex;
-  gap: 20px;
-  margin-top: 25px;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-top: 1.5rem;
 `;
 
 export default DailyMissonPage;
