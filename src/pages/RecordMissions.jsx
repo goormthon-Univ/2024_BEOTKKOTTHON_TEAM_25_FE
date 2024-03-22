@@ -23,7 +23,7 @@ const customStyles = {
 
 Modal.setAppElement('#root');
 
-function RecordsMissions() {
+function RecordMissions() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
 
@@ -239,4 +239,4 @@ const BlueBoxText = styled.p`
   font-size: 20px;
 `;
 
-export default RecordsMissions;
+export default RecordMissions;
