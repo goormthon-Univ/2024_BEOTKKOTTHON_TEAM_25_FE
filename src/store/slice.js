@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { postLogin } from '../services/api/auth';
 import { getEarthStatus, getMyPoint } from '../services/api/home';
-import { changeDailyMission, getDailyMission } from '../services/api/mission';
+import { changeDailyMission, getCompletedMissions, getDailyMission } from '../services/api/mission';
 
 import { saveItem } from '../services/storage';
 
@@ -22,6 +22,7 @@ const { actions, reducer } = createSlice({
     usingItems: [],
     missionId: 0,
     dailyMission: '',
+    completedMissions: [],
   },
   reducers: {
     changeLoginField(state, { payload: { name, value } }) {
@@ -96,6 +97,13 @@ const { actions, reducer } = createSlice({
         dailyMission,
       };
     },
+
+    setCompletedMissions(state, { payload: completedMissions }) {
+      return {
+        ...state,
+        completedMissions,
+      };
+    },
   },
 });
 
@@ -110,6 +118,7 @@ export const {
   setUsingItems,
   setMissionId,
   setDailyMission,
+  setCompletedMissions,
 } = actions;
 
 export function requestLogin() {
@@ -162,6 +171,14 @@ export function loadChangeDailyMission() {
 
     dispatch(setMissionId(missionId));
     dispatch(setDailyMission(dailyMission));
+  };
+}
+
+export function loadCompletedMissions() {
+  return async (dispatch) => {
+    const completedMissions = await getCompletedMissions();
+
+    dispatch(setCompletedMissions(completedMissions));
   };
 }
 

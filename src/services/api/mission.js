@@ -23,3 +23,13 @@ export async function changeDailyMission() {
 
   return { missionId, dailyMission };
 }
+
+export async function getCompletedMissions() {
+  const response = await axios.get('/api/v1/members/me/missions/completed?yearMonth=2024-03', {
+    headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
+  });
+
+  const completedMissions = response.data.data;
+
+  return completedMissions;
+}

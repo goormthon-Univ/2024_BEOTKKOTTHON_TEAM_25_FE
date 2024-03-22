@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import styled from 'styled-components';
+
+import { loadCompletedMissions } from '../store/slice';
 
 import { Header, Footer } from '../components/common/layout';
 import character from '../assets/img/record-character.png';
@@ -24,14 +27,27 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 function Recordspage() {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState('');
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const openModal = (image) => {
-    setSelectedImage(image);
-    setModalIsOpen(!modalIsOpen);
+  useEffect(() => {
+    dispatch(loadCompletedMissions());
+  }, []);
+
+  const completedMissions = useSelector((state) => state.completedMissions);
+
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState('');
+  const [selectedClearYear, setSelectedClearYear] = useState('');
+  const [selectedClearMonth, setSelectedClearMonth] = useState('');
+  const [selectedClearDay, setSelectedClearDay] = useState('');
+
+  const openModal = (mission) => {
+    setSelectedImage(mission.imageUrl);
+    setSelectedClearYear(mission.completedAt.slice(0, 4));
+    setSelectedClearMonth(mission.completedAt.slice(5, 7));
+    setSelectedClearDay(mission.completedAt.slice(8, 10));
+    setModalIsOpen(true);
   };
 
   return (
@@ -60,17 +76,22 @@ function Recordspage() {
         <ImgWrapper>
           <ImgSection>
             <ImgList>
-              <GrayCircle svc={'미션완료 이미지'} onClick={openModal} />
-              {/* {images.map((image, index) => (
-              <GrayCircle key={index} src={image} onClick={() => openModal(image)} />
-            ))} */}
-              <Modal isOpen={modalIsOpen} onRequestClose={openModal} style={customStyles}>
+              {completedMissions.map((mission, index) => (
+                <GrayCircle key={index} src={mission.imageUrl} onClick={() => openModal(mission)} />
+              ))}
+              <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={() => setModalIsOpen(false)}
+                style={customStyles}
+              >
                 <ModalImg src={selectedImage} />
                 <CharacterImgWrapper>
                   <CharacterImg src={character} />
                 </CharacterImgWrapper>
                 <BlueBox>
-                  <BlueBoxText>2024년 3월 13일의 지구</BlueBoxText>
+                  <BlueBoxText>
+                    {selectedClearYear}년 {selectedClearMonth}월 {selectedClearDay}일의 기록
+                  </BlueBoxText>
                 </BlueBox>
               </Modal>
             </ImgList>
@@ -83,7 +104,7 @@ function Recordspage() {
 }
 
 const Layout = styled.div`
-  height: 700px;
+  height: 600px;
   padding-top: 5rem;
   background-image: url(${Texture});
 `;
@@ -195,7 +216,9 @@ const ImgWrapper = styled.div`
 `;
 
 const ImgSection = styled.div`
-  width: 85%;
+  width: 80%;
+  height: calc(100vh - 298px);
+  overflow: scroll;
 `;
 
 const ImgList = styled.ul`
