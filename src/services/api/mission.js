@@ -9,3 +9,17 @@ export async function getDailyMission() {
 
   return { missionId, dailyMission };
 }
+
+export async function changeDailyMission() {
+  const response = await axios.patch(
+    '/api/v1/missions/today',
+    {},
+    {
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
+    },
+  );
+
+  const { missionId, content: dailyMission } = response.data.data;
+
+  return { missionId, dailyMission };
+}

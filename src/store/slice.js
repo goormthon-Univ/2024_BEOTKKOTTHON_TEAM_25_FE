@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { postLogin } from '../services/api/auth';
 import { getEarthStatus, getMyPoint } from '../services/api/home';
-import { getDailyMission } from '../services/api/mission';
+import { changeDailyMission, getDailyMission } from '../services/api/mission';
 
 import { saveItem } from '../services/storage';
 
@@ -149,6 +149,17 @@ export function loadHomeData() {
     dispatch(setWithDays(withDays));
     dispatch(setUsingItems(usingItems));
     dispatch(setEarthName(earthName));
+    dispatch(setMissionId(missionId));
+    dispatch(setDailyMission(dailyMission));
+  };
+}
+
+export function loadChangeDailyMission() {
+  return async (dispatch) => {
+    const { missionId, dailyMission } = await changeDailyMission();
+
+    saveItem('missionId', missionId);
+
     dispatch(setMissionId(missionId));
     dispatch(setDailyMission(dailyMission));
   };

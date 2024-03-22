@@ -1,14 +1,24 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+
+import { loadChangeDailyMission } from '../store/slice';
 
 import { Header, Button, Modal } from '../components/common/layout';
 import Texture from '../assets/img/ScreenBackground.png';
 
 const DailyMissonPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dailyMission = useSelector((state) => state.dailyMission);
+  const dispatch = useDispatch();
 
   const handleModalButtonClick = () => {
     setIsModalOpen(true);
+  };
+
+  const handleChangeMissionClick = () => {
+    dispatch(loadChangeDailyMission());
+    setIsModalOpen(false);
   };
 
   const handleCloseModal = () => {
@@ -22,7 +32,7 @@ const DailyMissonPage = () => {
         <DailyMissionContainer>
           <MissionContainer>
             <DailyMissionTitle>오늘의 미션!</DailyMissionTitle>
-            <MissionText>커피나 음료를 마실 때 텀블러 사용해주세요.</MissionText>
+            <MissionText>{dailyMission}</MissionText>
           </MissionContainer>
         </DailyMissionContainer>
         <TipText>tip ) 미션을 하는 행동과 사물이 잘 보이게 찍어주세요!</TipText>
@@ -55,7 +65,7 @@ const DailyMissonPage = () => {
               $bgColor={'blue'}
               $textColor={'white'}
               size={'medium'}
-              onClick={'미션변경 기능'}
+              onClick={handleChangeMissionClick}
             >
               예
             </Button>
