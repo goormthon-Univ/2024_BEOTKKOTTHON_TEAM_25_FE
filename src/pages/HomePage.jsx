@@ -16,13 +16,13 @@ const HomePage = () => {
         <CharacterInfoContainer>
           <CharacterInfo>지구젤리와 함께한지 24일 째</CharacterInfo>
           <CharacterContainer>
-            <CharacterBackgroundImg src={'배경이미지'} />
-            <TopLeftItem src={'왼쪽 위'} />
-            <TopRightItem src={'오른쪽 위'} />
-            <BottomLeftItem src={'왼쪽 아래'} />
-            <BottomRightItem src={'오른쪽 아래'} />
+            <CharacterBackgroundImg />
+            <TopLeftItem />
+            <TopRightItem />
+            <BottomLeftItem />
+            <BottomRightItem />
             <CharacterImg src={Earth} />
-            <OutfitImg src={'의상'} />
+            <OutfitImg />
           </CharacterContainer>
           <MyRoomBtn onClick={() => navigate('/myroom')}>
             <MyRoomIcon />
@@ -83,7 +83,7 @@ const CharacterContainer = styled.div`
   border-radius: 0.9rem;
 `;
 
-const CharacterBackgroundImg = styled.img`
+const CharacterBackgroundImg = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 0.9rem;
@@ -97,14 +97,14 @@ const CharacterImg = styled.img`
   object-fit: cover;
 `;
 
-const OutfitImg = styled.img`
+const OutfitImg = styled.div`
   position: absolute;
   bottom: 0;
   max-width: 100%;
   object-fit: cover;
 `;
 
-const TopLeftItem = styled.img`
+const TopLeftItem = styled.div`
   position: absolute;
   top: 0%;
   left: 0%;
@@ -112,7 +112,7 @@ const TopLeftItem = styled.img`
   object-fit: contain;
 `;
 
-const TopRightItem = styled.img`
+const TopRightItem = styled.div`
   position: absolute;
   top: 0%;
   right: 0%;
@@ -120,7 +120,7 @@ const TopRightItem = styled.img`
   object-fit: contain;
 `;
 
-const BottomLeftItem = styled.img`
+const BottomLeftItem = styled.div`
   position: absolute;
   bottom: 0%;
   left: 0%;
@@ -128,7 +128,7 @@ const BottomLeftItem = styled.img`
   object-fit: contain;
 `;
 
-const BottomRightItem = styled.img`
+const BottomRightItem = styled.div`
   position: absolute;
   bottom: 0%;
   right: 0%;
