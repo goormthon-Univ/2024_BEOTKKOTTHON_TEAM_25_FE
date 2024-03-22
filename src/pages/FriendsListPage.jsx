@@ -9,10 +9,11 @@ const FriendsListPage = () => {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isAcceptModalOpen, setAcceptModalOpen] = useState(false);
   const [isActive, setActive] = useState(false);
+  const [isPressed, setPressed] = useState(false);
 
   const toggleInviteModal = () => {
     setInviteModalOpen(!isInviteModalOpen);
-    setActive(!isActive);
+    setActive(!isActive); //친구 초대 버튼 색상 변경
   };
 
   const toggleDeleteModal = () => {
@@ -21,6 +22,10 @@ const FriendsListPage = () => {
 
   const toggleAcceptModal = () => {
     setAcceptModalOpen(!isAcceptModalOpen);
+  };
+
+  const handleFriendClick = () => {
+    setPressed(!isPressed); // 친구 초대 모달 안에 있는 친구 색상 변경
   };
 
   return (
@@ -69,9 +74,25 @@ const FriendsListPage = () => {
         <ModalInviteText>
           친구 초대<CloseIcon onClick={toggleInviteModal}>close</CloseIcon>
         </ModalInviteText>
-        <NameInput placeholder='지구 이름'></NameInput>
+        <SearchBox>
+          <NameInput placeholder='지구 이름' />
+          <ModalIconWrapper /* onClick={ 이름 검색 결과 함수 여기 적용 } */>
+            <Icon>search</Icon>
+          </ModalIconWrapper>
+        </SearchBox>
+        <SearchResultBox>
+          <SearchResult onClick={handleFriendClick} $active={isPressed}>
+            <SearchResultCircle />
+            지구 이름
+          </SearchResult>
+        </SearchResultBox>
         <ModalButtonWrapper>
-          <Button $bgColor={'blue'} $textColor={'white'} size={'medium'}>
+          <Button
+            $bgColor={'blue'}
+            $textColor={'white'}
+            size={'medium'}
+            onClick={'해당 친구에게 친구 요청 보내기'}
+          >
             요청
           </Button>
         </ModalButtonWrapper>
@@ -118,10 +139,11 @@ const FriendListPage = styled.div`
   flex-direction: column;
   align-items: center;
   height: 700px;
-  padding: 0 1.5rem;
+  padding: 4rem 1.5rem;
   background-image: url(${ScreenBackground});
   font-family: 'SUITE-Medium', sans-serif;
   color: #ffffff;
+  z-index: -1;
 `;
 
 const InviteButton = styled.button`
@@ -239,17 +261,83 @@ const CloseIcon = styled.button`
   cursor: pointer;
 `;
 
-const NameInput = styled.input`
-  width: 13rem;
-  margin: 1rem;
-  padding: 0.5rem 1rem;
+const SearchBox = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15rem;
+  margin: 1rem 0.8rem;
   border: none;
   border-radius: 0.8rem;
   background-color: #e5e5e5;
+  color: #666666;
+`;
+
+const NameInput = styled.input`
+  width: 10rem;
+  padding: 0.7rem;
+  border: none;
+  background-color: transparent;
   font-family: 'SUITE-Light', sans-serif;
   font-size: 1.25rem;
   text-align: left;
-  color: #666666;
+`;
+
+const ModalIconWrapper = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border: none;
+  background-color: transparent;
+`;
+
+const Icon = styled.div`
+  border: none;
+  background-color: transparent;
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 1.5rem;
+  text-align: center;
+  color: ${(props) => props.theme.colors.green};
+`;
+
+const SearchResultBox = styled.div`
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  width: 15rem;
+  height: 11.5rem;
+  margin: 1rem 0.8rem;
+  border: none;
+  border-radius: 0.8rem;
+  background-color: #e5e5e5;
+`;
+
+const SearchResult = styled.button`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  width: 13rem;
+  height: fit-content;
+  margin: 1rem 0;
+  padding: 0.8rem 0;
+  border: none;
+  border-radius: 0.8rem;
+  background-color: ${(props) => (props.$active ? '#F9BC60' : 'white')};
+  font-family: 'SUITE-Medium', sans-serif;
+  font-size: 1rem;
+  color: #404040;
+`;
+
+const SearchResultCircle = styled.div`
+  width: 2rem;
+  height: 2rem;
+  margin: 0 0.6rem;
+  border: none;
+  border-radius: 50%;
+  background-color: #e5e5e5;
 `;
 
 const ModalButtonWrapper = styled.div`
@@ -265,7 +353,7 @@ const ModalText = styled.div`
   text-align: center;
   color: #000000;
   line-height: 2rem;
-  white-space: pre-wrap;
+  white-space: pre-wrap; // \n 적용하기
 `;
 
 export default FriendsListPage;
