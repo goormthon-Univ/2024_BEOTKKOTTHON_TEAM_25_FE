@@ -9,6 +9,7 @@ import {
   MyPage,
   OnboardingPage,
   Recordspage,
+  RegisterPage,
   StorePage,
   StoreDetailPage,
 } from './pages';
@@ -27,6 +28,7 @@ const Router = () => {
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/onboarding' element={<OnboardingPage />} />
         <Route path='/records' element={<Recordspage />} />
+        <Route path='/register' element={<RegisterPage />} />
         <Route path='/store' element={<StorePage />} />
         <Route path='/store/:categoryId' element={<StoreDetailPage />} />
       </Routes>

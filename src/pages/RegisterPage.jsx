@@ -40,9 +40,11 @@ const RegisterPage = () => {
             간격 맞추기 위한 텍스트. 지우지 마세요!
           </ErrorMessageText>
           <Input placeholder='아이디 (이메일)' onChange={handleEmailChange} />
-          <ErrorMessageText>이미 등록된 사용자입니다.</ErrorMessageText>
+          <ErrorMessageText style={{ visibility: 'hidden' }}>
+            이미 등록된 사용자입니다.
+          </ErrorMessageText>
           <Input placeholder='비밀번호' type='password' onChange={handlePasswordChange} />
-          <ErrorMessageText>
+          <ErrorMessageText style={{ visibility: 'hidden' }}>
             대문자, 소문자, 숫자, 특수문자 포함 9~16자 작성해주세요.
           </ErrorMessageText>
         </InputContainer>

@@ -7,5 +7,6 @@ export { default as LoginPage } from './LoginPage';
 export { default as MyPage } from './MyPage';
 export { default as OnboardingPage } from './OnboardingPage';
 export { default as Recordspage } from './RecordsPage';
+export { default as RegisterPage } from './RegisterPage';
 export { default as StorePage } from './StorePage';
 export { default as StoreDetailPage } from './StoreDetailPage';
