@@ -3,9 +3,6 @@ import styled from 'styled-components';
 
 import { Header, Footer, Modal } from '../components/common/layout';
 import EarthImage from '../assets/img/own-earth-char.png';
-// import ItemImage from '../assets/item.png';
-// import ItemImage2 from '../assets/item2.png';
-// import ItemImage3 from '../assets/item3.png';
 import Texture from '../assets/img/ScreenBackground.png';
 
 const FriendsProfilePage = () => {
