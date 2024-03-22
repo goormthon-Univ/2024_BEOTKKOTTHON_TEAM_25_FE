@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { postLogin } from '../services/api/auth';
 import { getEarthStatus, getMyPoint } from '../services/api/home';
 import { changeDailyMission, getCompletedMissions, getDailyMission } from '../services/api/mission';
+import { getMyMonthlyFriendsData, getFriendsMonthlyFriendsData } from '../services/api/friends';
 
 import { saveItem } from '../services/storage';
 
@@ -23,6 +24,10 @@ const { actions, reducer } = createSlice({
     missionId: 0,
     dailyMission: '',
     completedMissions: [],
+    accumulatedPoint: 0,
+    completedMissionCount: 0,
+    completionRate: 0,
+    friends: [],
   },
   reducers: {
     changeLoginField(state, { payload: { name, value } }) {
@@ -104,6 +109,34 @@ const { actions, reducer } = createSlice({
         completedMissions,
       };
     },
+
+    setAccumulatedPoint(state, { payload: accumulatedPoint }) {
+      return {
+        ...state,
+        accumulatedPoint,
+      };
+    },
+
+    setCompletedMissionCount(state, { payload: completedMissionCount }) {
+      return {
+        ...state,
+        completedMissionCount,
+      };
+    },
+
+    setCompletionRate(state, { payload: completionRate }) {
+      return {
+        ...state,
+        completionRate,
+      };
+    },
+
+    setFriends(state, { payload: friends }) {
+      return {
+        ...state,
+        friends,
+      };
+    },
   },
 });
 
@@ -119,6 +152,10 @@ export const {
   setMissionId,
   setDailyMission,
   setCompletedMissions,
+  setAccumulatedPoint,
+  setCompletedMissionCount,
+  setCompletionRate,
+  setFriends,
 } = actions;
 
 export function requestLogin() {
@@ -179,6 +216,18 @@ export function loadCompletedMissions() {
     const completedMissions = await getCompletedMissions();
 
     dispatch(setCompletedMissions(completedMissions));
+  };
+}
+
+export function loadFriendsData() {
+  return async (dispatch) => {
+    const [{ completedMissionCount, accumulatedPoint, completionRate }, response] =
+      await Promise.all([getMyMonthlyFriendsData(), getFriendsMonthlyFriendsData()]);
+
+    dispatch(setCompletedMissionCount(completedMissionCount));
+    dispatch(setAccumulatedPoint(accumulatedPoint));
+    dispatch(setCompletionRate(completionRate));
+    dispatch(setFriends(response));
   };
 }
 

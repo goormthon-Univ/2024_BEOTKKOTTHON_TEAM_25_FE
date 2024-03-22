@@ -1,11 +1,23 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+
+import { loadFriendsData } from '../store/slice';
 
 import { Header, Footer } from '../components/common/layout';
 import Texture from '../assets/img/ScreenBackground.png';
 
 const FriendsPage = () => {
-  //성취도를 입력하면 그래프가 변합니다
-  const achievementRate = 60;
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadFriendsData());
+  }, []);
+
+  const accumulatedPoint = useSelector((state) => state.accumulatedPoint);
+  const completedMissionCount = useSelector((state) => state.completedMissionCount);
+  const completionRate = useSelector((state) => state.completionRate);
+  // const friends = useSelector((state) => state.friends); 친구 목록
 
   return (
     <>
@@ -15,15 +27,15 @@ const FriendsPage = () => {
         <MonthlyContainer>
           <PointTitle>
             누적 포인트<PointIcon>stars</PointIcon>
-            <PointText>1,200</PointText>
+            <PointText>{accumulatedPoint}</PointText>
           </PointTitle>
-          <PointTitle>미션 완료 횟수 18회</PointTitle>
+          <PointTitle>미션 완료 횟수 {completedMissionCount}회</PointTitle>
           <AchieveWrapper>
             <GraphIcon>bar_chart</GraphIcon>
-            <AchieveText>달성률 60%</AchieveText>
+            <AchieveText>달성률 {completionRate}%</AchieveText>
           </AchieveWrapper>
           <ProgressBar>
-            <ProgressBarOrange width={`${achievementRate}%`} />
+            <ProgressBarOrange width={`${completionRate}%`} />
           </ProgressBar>
         </MonthlyContainer>
         <TitleText>친구</TitleText>
