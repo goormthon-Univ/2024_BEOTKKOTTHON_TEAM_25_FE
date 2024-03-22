@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const Header = () => {
+const Header = ({ point }) => {
   const navigate = useNavigate();
 
   const handleClickBack = () => {
@@ -25,7 +26,7 @@ const Header = () => {
                 <Icon>
                   <IconWrapper>stars</IconWrapper>
                 </Icon>
-                <Point>70</Point>
+                <Point>{point}</Point>
               </PointContainer>
               <ButtonWrapper onClick={handleClick}>
                 <Icon>account_circle</Icon>
@@ -104,7 +105,7 @@ const Header = () => {
               <Icon>
                 <IconWrapper>stars</IconWrapper>
               </Icon>
-              <Point>70</Point>
+              <Point>{point}</Point>
             </PointContainer>
           </HeaderContainer>
         );
@@ -143,6 +144,10 @@ const Header = () => {
   };
 
   return <>{determineHeader()}</>;
+};
+
+Header.propTypes = {
+  point: PropTypes.number,
 };
 
 const HeaderContainer = styled.div`

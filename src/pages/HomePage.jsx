@@ -1,5 +1,9 @@
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { loadHomeData } from '../store/slice';
 
 import { Header, Footer } from '../components/common/layout';
 import Texture from '../assets/img/ScreenBackground.png';
@@ -7,14 +11,27 @@ import GoodJob from '../assets/img/GoodJob.png';
 import Earth from '../assets/img/earth.png';
 
 const HomePage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(loadHomeData());
+  }, []);
+
+  const point = useSelector((state) => state.point);
+  const withDays = useSelector((state) => state.withDays);
+  const earthName = useSelector((state) => state.earthName);
+  // const usingItems = useSelector((state) => state.usingItems); 옷 장착 상태
+  const dailyMission = useSelector((state) => state.dailyMission);
 
   return (
     <>
-      <Header />
+      <Header point={point} />
       <Layout>
         <CharacterInfoContainer>
-          <CharacterInfo>지구젤리와 함께한지 24일 째</CharacterInfo>
+          <CharacterInfo>
+            {earthName}와 함께한지 {withDays}일 째
+          </CharacterInfo>
           <CharacterContainer>
             <CharacterBackgroundImg />
             <TopLeftItem />
@@ -32,7 +49,7 @@ const HomePage = () => {
         {/* 미션 수행 전 */}
         <DailyMissionTitle>미션이 도착했어요! 💌</DailyMissionTitle>
         <DailyMissionContainer onClick={() => navigate('/daily-mission')}>
-          미션 내용
+          {dailyMission}
         </DailyMissionContainer>
         {/* 미션 완료 후 화면 */}
         {/* <DailyMissionTitle>오늘의 미션 완료 !</DailyMissionTitle>
