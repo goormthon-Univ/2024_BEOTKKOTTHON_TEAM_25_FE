@@ -1,27 +1,38 @@
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { get } from '../utils/utils';
+import { changeLoginField, requestLogin } from '../store/slice';
 import { Header, Button } from '../components/common/layout';
 import Texture from '../assets/img/ScreenBackground.png';
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const { email, password } = useSelector(get('loginFields'));
+
+  const handleStateChange = ({ name, value }) => {
+    dispatch(changeLoginField({ name, value }));
   };
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
+  const handleInputChange = (event) => {
+    const {
+      target: { name, value },
+    } = event;
+    handleStateChange({ name, value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(email, password);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    dispatch(requestLogin())
+      .then(() => {
+        navigate('/home');
+      })
+      .catch(() => {
+        alert('입력창을 확인해주세요.');
+      });
   };
 
   return (
@@ -30,10 +41,26 @@ const LoginPage = () => {
       <Layout>
         <LoginText>로그인</LoginText>
         <InputContainer>
-          <Input placeholder='아이디 (이메일)' onChange={handleEmailChange} />
-          <ErrorMessageText>등록된 사용자가 없습니다.</ErrorMessageText>
-          <Input placeholder='비밀번호' type='password' onChange={handlePasswordChange} />
-          <ErrorMessageText>비밀번호가 일치하지 않습니다.</ErrorMessageText>
+          <Input
+            placeholder='아이디 (이메일)'
+            type='email'
+            name='email'
+            value={email}
+            onChange={handleInputChange}
+          />
+          <ErrorMessageText style={{ visibility: 'hidden' }}>
+            등록된 사용자가 없습니다.
+          </ErrorMessageText>
+          <Input
+            placeholder='비밀번호'
+            type='password'
+            name='password'
+            value={password}
+            onChange={handleInputChange}
+          />
+          <ErrorMessageText style={{ visibility: 'hidden' }}>
+            비밀번호가 일치하지 않습니다.
+          </ErrorMessageText>
         </InputContainer>
         <NavigateText>
           계정을 만드시려면,
