@@ -24,13 +24,38 @@ const Footer = () => {
         <Icon onClick={handleClickHome} $active={location.pathname === '/home'}>
           home
         </Icon>
-        <Icon onClick={handleClickRecords} $active={location.pathname === '/records'}>
+        <Icon
+          onClick={handleClickRecords}
+          $active={
+            location.pathname === '/records' ||
+            location.pathname === '/record-categories' ||
+            location.pathname === '/record-missions'
+          }
+        >
           photo_library
         </Icon>
-        <Icon onClick={handleClickFriends} $active={location.pathname === '/friends'}>
+        <Icon
+          onClick={handleClickFriends}
+          $active={
+            location.pathname === '/friends' ||
+            location.pathname === '/friends-list' ||
+            location.pathname === '/friends-profile'
+          }
+        >
           group
         </Icon>
-        <Icon onClick={handleClickStore} $active={location.pathname === '/store'}>
+        <Icon
+          onClick={handleClickStore}
+          $active={
+            location.pathname === '/store' ||
+            location.pathname === '/store/0' ||
+            location.pathname === '/store/1' ||
+            location.pathname === '/store/2' ||
+            location.pathname === '/store/3' ||
+            location.pathname === '/store/4' ||
+            location.pathname === '/store/5'
+          }
+        >
           storefront
         </Icon>
       </FooterContainer>
