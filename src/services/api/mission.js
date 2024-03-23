@@ -5,9 +5,9 @@ export async function getDailyMission() {
     headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
   });
 
-  const { missionId, content: dailyMission } = response.data.data;
+  const { missionId, content: dailyMission, imageUrl, isCompleted } = response.data.data;
 
-  return { missionId, dailyMission };
+  return { missionId, dailyMission, imageUrl, isCompleted };
 }
 
 export async function changeDailyMission() {
