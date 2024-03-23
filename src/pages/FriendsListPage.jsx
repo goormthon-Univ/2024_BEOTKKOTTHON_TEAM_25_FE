@@ -1,15 +1,45 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Header, Footer, Button, Modal } from '../components/common/layout';
 import ScreenBackground from '../assets/img/ScreenBackground.png';
+import { Button, Footer, Header, Modal } from '../components/common/layout';
+import {
+  accpetFriendRequest,
+  deleteFriend,
+  getFriendRequests,
+  getMyFriends,
+  requestFriend,
+  serachMemberByEarthName,
+} from '../services/api/member';
 
 const FriendsListPage = () => {
   const [isInviteModalOpen, setInviteModalOpen] = useState(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [isAcceptModalOpen, setAcceptModalOpen] = useState(false);
   const [isActive, setActive] = useState(false);
-  const [isPressed, setPressed] = useState(false);
+
+  const [friends, setFriends] = useState([]);
+  const [friendRequests, setFriendRequests] = useState([]);
+  const [selectedRequest, setSelectedRequest] = useState({});
+  const [selectedFriend, setSelectedFriend] = useState({});
+  const [serachEarthName, setSearchEarthName] = useState('');
+  const [searchedMembers, setSearchedMembers] = useState([]);
+  const [selectedMember, setSelectedMember] = useState({});
+
+  const getAndSetFriendRequests = async () => {
+    const response = await getFriendRequests();
+    setFriendRequests(response);
+  };
+
+  const getAndSetMyFriends = async () => {
+    const response = await getMyFriends();
+    setFriends(response);
+  };
+
+  useEffect(() => {
+    getAndSetFriendRequests();
+    getAndSetMyFriends();
+  }, []);
 
   const toggleInviteModal = () => {
     setInviteModalOpen(!isInviteModalOpen);
@@ -20,12 +50,47 @@ const FriendsListPage = () => {
     setDeleteModalOpen(!isDeleteModalOpen);
   };
 
+  const handleAcceptClick = (request) => {
+    setSelectedRequest(request);
+    toggleAcceptModal();
+  };
+
   const toggleAcceptModal = () => {
     setAcceptModalOpen(!isAcceptModalOpen);
   };
 
-  const handleFriendClick = () => {
-    setPressed(!isPressed); // 친구 초대 모달 안에 있는 친구 색상 변경
+  const handleSearchedMemberClick = (member) => {
+    setSelectedMember(member);
+  };
+
+  const handleAcceptYesClick = async (requestId) => {
+    await accpetFriendRequest(requestId);
+    toggleAcceptModal();
+    getAndSetFriendRequests();
+  };
+
+  const handleSearchEarthNamgeChange = async (e) => {
+    setSearchEarthName(e.target.value);
+    const response = await serachMemberByEarthName(serachEarthName);
+    setSearchedMembers(response.filter((member) => !member.isFriend));
+  };
+
+  const handleDeleteFriendClick = (friend) => {
+    setSelectedFriend(friend);
+    toggleDeleteModal();
+  };
+
+  const handleDeleteFriendYesClick = async () => {
+    await deleteFriend(selectedFriend.friendId);
+    toggleDeleteModal();
+    setSelectedFriend({});
+    await getAndSetMyFriends();
+  };
+
+  const handleRequestFriendClick = async (memberId) => {
+    if (!memberId) return;
+    await requestFriend(memberId);
+    await serachMemberByEarthName(serachEarthName);
   };
 
   return (
@@ -36,41 +101,45 @@ const FriendsListPage = () => {
           <InviteIcon $active={isActive}>add_circle</InviteIcon>친구 초대
         </InviteButton>
         <FriendWrapper>
-          <FriendListContainer>
-            <IconWrapper>
-              <FaceIcon>sentiment_very_satisfied</FaceIcon>
-              <FriendText>김구름</FriendText>
-            </IconWrapper>
-            <SmallButtonWrapper>
-              <Button
-                $bgColor={'lightBlue'}
-                $textColor={'white'}
-                size={'small'}
-                onClick={toggleDeleteModal}
-              >
-                삭제
-              </Button>
-            </SmallButtonWrapper>
-          </FriendListContainer>
+          {friends.map(({ friendId, friendName }) => (
+            <FriendContainer key={friendId}>
+              <IconWrapper>
+                <FaceIcon>sentiment_very_satisfied</FaceIcon>
+                <FriendText>{friendName}</FriendText>
+              </IconWrapper>
+              <SmallButtonWrapper>
+                <Button
+                  $bgColor={'lightBlue'}
+                  $textColor={'white'}
+                  size={'small'}
+                  onClick={() => handleDeleteFriendClick({ friendId, friendName })}
+                >
+                  삭제
+                </Button>
+              </SmallButtonWrapper>
+            </FriendContainer>
+          ))}
         </FriendWrapper>
-        <TitleText>친구 요청</TitleText>
         <FriendWrapper>
-          <FriendRequestContainer>
-            <IconWrapper>
-              <EarthIcon>public</EarthIcon>
-              <FriendText>김구름</FriendText>
-            </IconWrapper>
-            <SmallButtonWrapper>
-              <Button
-                $bgColor={'orange'}
-                $textColor={'black'}
-                size={'small'}
-                onClick={toggleAcceptModal}
-              >
-                수락
-              </Button>
-            </SmallButtonWrapper>
-          </FriendRequestContainer>
+          <TitleText>친구 요청</TitleText>
+          {friendRequests.map((request) => (
+            <FriendRequestContainer key={request.requestId}>
+              <IconWrapper>
+                <EarthIcon>public</EarthIcon>
+                {request.name}
+              </IconWrapper>
+              <SmallButtonWrapper>
+                <Button
+                  $bgColor={'orange'}
+                  $textColor={'black'}
+                  size={'small'}
+                  onClick={() => handleAcceptClick(request)}
+                >
+                  수락
+                </Button>
+              </SmallButtonWrapper>
+            </FriendRequestContainer>
+          ))}
         </FriendWrapper>
       </FriendListPage>
       <Footer />
@@ -79,32 +148,49 @@ const FriendsListPage = () => {
           친구 초대<CloseIcon onClick={toggleInviteModal}>close</CloseIcon>
         </ModalInviteText>
         <SearchBox>
-          <NameInput placeholder='지구 이름' />
+          <NameInput
+            placeholder='지구 이름'
+            value={serachEarthName}
+            onChange={handleSearchEarthNamgeChange}
+          />
           <ModalIconWrapper /* onClick={ 이름 검색 결과 함수 여기 적용 } */>
             <Icon>search</Icon>
           </ModalIconWrapper>
         </SearchBox>
         <SearchResultWrapper>
-          <SearchResult onClick={handleFriendClick} $active={isPressed}>
-            <SearchResultCircle />
-            지구 이름
-          </SearchResult>
+          {searchedMembers.map((member) => (
+            <SearchResult
+              key={member.memberId}
+              onClick={() => handleSearchedMemberClick(member)}
+              $active={selectedMember.memberId == member.memberId}
+            >
+              <SearchResultCircle />
+              {member.name}
+            </SearchResult>
+          ))}
         </SearchResultWrapper>
         <ModalButtonWrapper>
           <Button
             $bgColor={'blue'}
             $textColor={'white'}
             size={'medium'}
-            onClick={'해당 친구에게 친구 요청 보내기'}
+            onClick={() => handleRequestFriendClick(selectedMember.memberId)}
           >
             요청
           </Button>
         </ModalButtonWrapper>
       </Modal>
       <Modal isOpen={isDeleteModalOpen} onRequestClose={toggleDeleteModal}>
-        <ModalText>최지민님을 친구에서{'\n'}삭제 하시겠습니까?</ModalText>
+        <ModalText>
+          {selectedFriend.friendName}님을 친구에서{'\n'}삭제 하시겠습니까?
+        </ModalText>
         <ModalButtonWrapper>
-          <Button $bgColor={'blue'} $textColor={'white'} size={'medium'}>
+          <Button
+            $bgColor={'blue'}
+            $textColor={'white'}
+            size={'medium'}
+            onClick={handleDeleteFriendYesClick}
+          >
             예
           </Button>
           <Button
@@ -118,9 +204,16 @@ const FriendsListPage = () => {
         </ModalButtonWrapper>
       </Modal>
       <Modal isOpen={isAcceptModalOpen} onRequestClose={toggleAcceptModal}>
-        <ModalText>최지민님의 요청을{'\n'}수락 하시겠습니까?</ModalText>
+        <ModalText>
+          {selectedRequest.name}님의 요청을{'\n'}수락 하시겠습니까?
+        </ModalText>
         <ModalButtonWrapper>
-          <Button $bgColor={'blue'} $textColor={'white'} size={'medium'}>
+          <Button
+            $bgColor={'blue'}
+            $textColor={'white'}
+            size={'medium'}
+            onClick={() => handleAcceptYesClick(selectedRequest.requestId)}
+          >
             예
           </Button>
           <Button
@@ -179,9 +272,10 @@ const FriendWrapper = styled.div`
   flex-direction: column;
   height: 50%;
   padding: 0 0.5rem;
+  width: 100%;
 `;
 
-const FriendListContainer = styled.div`
+const FriendContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -210,12 +304,11 @@ const IconWrapper = styled.div`
   flex-direction: row;
   align-items: center;
   width: 100%;
-  padding-right: 9rem;
   padding-left: 0.5rem;
 `;
 
 const FriendText = styled.div`
-  width: 50px;
+  width: 100%;
 `;
 
 const SmallButtonWrapper = styled.div`
@@ -339,7 +432,7 @@ const SearchResult = styled.button`
 `;
 
 const SearchResultWrapper = styled.div`
-  overflow: scroll;
+  overflow: scroll-y;
   display: flex;
   flex-direction: column;
   height: 150px;
