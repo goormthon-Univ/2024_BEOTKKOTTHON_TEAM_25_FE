@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { loadFriendsData } from '../store/slice';
+import { loadFriendsData, setFriendId } from '../store/slice';
 
 import { Header, Footer } from '../components/common/layout';
 import Texture from '../assets/img/ScreenBackground.png';
@@ -19,7 +19,12 @@ const FriendsPage = () => {
   const accumulatedPoint = useSelector((state) => state.accumulatedPoint);
   const completedMissionCount = useSelector((state) => state.completedMissionCount);
   const completionRate = useSelector((state) => state.completionRate);
-  // const friends = useSelector((state) => state.friends); 친구 목록
+  const friends = useSelector((state) => state.friends);
+
+  const handleFriendClick = (friendId) => {
+    dispatch(setFriendId(friendId));
+    navigate('/friends-profile');
+  };
 
   return (
     <>
@@ -41,17 +46,21 @@ const FriendsPage = () => {
           </ProgressBar>
         </MonthlyContainer>
         <TitleText>친구</TitleText>
-        <FriendBox onClick={() => navigate('/friends-profile')}>
-          <FaceIcon>sentiment_very_satisfied</FaceIcon>
-          <FriendInfoContainer>
-            <FriendPointWrapper>
-              <FriendPointIcon>stars</FriendPointIcon>
-              <FriendPointText>1,800</FriendPointText>
-            </FriendPointWrapper>
-            <FriendText>최지민</FriendText>
-            <FriendAchieve>월간 미션 달성률 75%</FriendAchieve>
-          </FriendInfoContainer>
-        </FriendBox>
+        <FriendWrapper>
+          {friends.map((response) => (
+            <FriendBox onClick={() => handleFriendClick(response.memberId)} key={response.memberId}>
+              <FaceIcon>sentiment_very_satisfied</FaceIcon>
+              <FriendInfoContainer>
+                <FriendPointWrapper>
+                  <FriendPointIcon>stars</FriendPointIcon>
+                  <FriendPointText>{response.accumulatedPoint}</FriendPointText>
+                </FriendPointWrapper>
+                <FriendText>{response.name}</FriendText>
+                <FriendAchieve>월간 미션 달성률 {response.completionRate}%</FriendAchieve>
+              </FriendInfoContainer>
+            </FriendBox>
+          ))}
+        </FriendWrapper>
       </Layout>
       <Footer />
     </>
@@ -196,6 +205,15 @@ const FriendAchieve = styled.div`
   font-size: 1rem;
   text-align: left;
   color: #000000;
+`;
+
+const FriendWrapper = styled.div`
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  padding: 0 0.5rem;
+  width: 100%;
 `;
 
 export default FriendsPage;
