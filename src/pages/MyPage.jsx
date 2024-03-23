@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { Header, Footer, Button, Modal } from '../components/common/layout';
@@ -8,6 +9,7 @@ import EarthImage from '../assets/img/own-earth-char.png';
 const MyPage = () => {
   const [isOn, setIsOn] = useState(true);
   const [isModalOpen, setModalOpen] = useState(false);
+  const withDays = useSelector((state) => state.withDays);
 
   const toggleSwitch = () => {
     setIsOn(!isOn);
@@ -24,7 +26,7 @@ const MyPage = () => {
         <ProfileContainer>
           <ProfilePicture src={EarthImage} />
           <ProfileText>
-            지구를 지킨지<ProfileDayText>24일 째</ProfileDayText>
+            지구를 지킨지<ProfileDayText>{withDays}일 째</ProfileDayText>
             <JoinDateText>2024년 03월 24일</JoinDateText>
           </ProfileText>
         </ProfileContainer>
