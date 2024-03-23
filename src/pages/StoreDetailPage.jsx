@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 
-import { Header, Footer } from '../components/common/layout';
-import Button from '../components/common/layout/Button';
-import ScreenBackground from '../assets/img/ScreenBackground.png';
+import { Header, Footer, Button } from '../components/common/layout';
+import Texture from '../assets/img/ScreenBackground.png';
 
 const customStyles = {
   content: {
@@ -25,25 +25,27 @@ const customStyles = {
 // 카테고리는 0부터 시작해야 하며 번호는 공백없이 연속되어야 함
 const category = {
   0: '의류',
-  1: '액세서리',
-  2: '소품',
-  3: '바닥재',
-  4: '벽지',
+  1: '왼쪽 위 소품',
+  2: '왼쪽 아래 소품',
+  3: '오른쪽 위 소품',
+  4: '오른쪽 아래 소품',
+  5: '배경',
 };
 
 const StoreDetailPage = () => {
   const { categoryId } = useParams();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const point = useSelector((state) => state.point);
 
   const categoryIdNum = Number(categoryId);
 
   const handleLeftCategoryClick = () => {
-    navigate(`/store/${(categoryIdNum - 1 + 5) % 5}`); // 현재 카테고리 - 1 + (카테고리 수) % (카테고리 수)
+    navigate(`/store/${(categoryIdNum - 1 + 6) % 6}`); // 현재 카테고리 - 1 + (카테고리 수) % (카테고리 수)
   };
 
   const handleRightCategoryClick = () => {
-    navigate(`/store/${(categoryIdNum + 1) % 5}`); // 현재 카테고리 + 1 % (카테고리 수)
+    navigate(`/store/${(categoryIdNum + 1) % 6}`); // 현재 카테고리 + 1 % (카테고리 수)
   };
 
   const handleModalButtonClick = () => {
@@ -55,159 +57,60 @@ const StoreDetailPage = () => {
   };
 
   return (
-    <Layout>
+    <>
       <Header />
-      <SubTopBar>
-        <RightContainer>
-          <PointContainer>
-            <Icon>
-              <IconWrapper>stars</IconWrapper>
-            </Icon>
-            <Point>70</Point> {/*API 적용 전*/}
-          </PointContainer>
-        </RightContainer>
-      </SubTopBar>
-      <ProductContainer>
-        <CategoryContainer>
-          <LeftIcon onClick={handleLeftCategoryClick}>navigate_before</LeftIcon>
-          <CategoryTitle>{category[categoryId]}</CategoryTitle>
-          <RightIcon onClick={handleRightCategoryClick}>navigate_next</RightIcon>
-        </CategoryContainer>
-        <ItemListContainer>
-          <ItemList>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <Modal isOpen={isModalOpen} onRequestClose={handleCloseModal} style={customStyles}>
-              <BuyItemTitle>초록색 티셔츠를</BuyItemTitle>
-              <BuyConfirmText>구매하시겠습니까?</BuyConfirmText>
-              <BuyItemPriceWrapper>
-                <BuyItemPriceIcon />
-                <BuyItemPriceText>70</BuyItemPriceText>
-              </BuyItemPriceWrapper>
-              <ModalButtonWrapper>
-                <Button $bgColor={'blue'} $textColor={'white'} size={'medium'} border={''}>
-                  예
-                </Button>
-                <Button
-                  $bgColor={'blue'}
-                  $textColor={'white'}
-                  size={'medium'}
-                  border={''}
-                  onClick={handleCloseModal}
-                >
-                  아니오
-                </Button>
-              </ModalButtonWrapper>
-            </Modal>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-            <ItemContainer onClick={handleModalButtonClick}>
-              <ItemImg />
-              <PriceWrapper>
-                <PriceIcon />
-                <PriceText>70</PriceText>
-              </PriceWrapper>
-            </ItemContainer>
-          </ItemList>
-        </ItemListContainer>
-      </ProductContainer>
-
-      <Footer />
-    </Layout>
+      <Layout>
+        <SubTopBar>
+          <RightContainer>
+            <PointContainer>
+              <Icon>stars</Icon>
+              <Point>{point}</Point>
+            </PointContainer>
+          </RightContainer>
+        </SubTopBar>
+        <ProductContainer>
+          <CategoryContainer>
+            <LeftIcon onClick={handleLeftCategoryClick}>navigate_before</LeftIcon>
+            <CategoryTitle>{category[categoryId]}</CategoryTitle>
+            <RightIcon onClick={handleRightCategoryClick}>navigate_next</RightIcon>
+          </CategoryContainer>
+          <ItemListContainer>
+            <ItemList>
+              <ItemContainer onClick={handleModalButtonClick}>
+                <ItemImg src={'아이템 이미지'} alt='item' />
+                <PriceWrapper>
+                  <PriceIcon>stars</PriceIcon>
+                  <PriceText>70</PriceText>
+                </PriceWrapper>
+              </ItemContainer>
+            </ItemList>
+          </ItemListContainer>
+        </ProductContainer>
+        <Footer />
+        <Modal isOpen={isModalOpen} onRequestClose={handleCloseModal} style={customStyles}>
+          <ModalText>
+            <ModalBoldText>초록색 티셔츠</ModalBoldText>를{'\n'} 구매하시겠습니까?
+          </ModalText>
+          <BuyItemPriceWrapper>
+            <BuyItemPriceIcon />
+            <BuyItemPriceText>-70</BuyItemPriceText>
+          </BuyItemPriceWrapper>
+          <ModalButtonWrapper>
+            <Button $bgColor={'blue'} $textColor={'white'} size={'medium'}>
+              예
+            </Button>
+            <Button
+              $bgColor={'blue'}
+              $textColor={'white'}
+              size={'medium'}
+              onClick={handleCloseModal}
+            >
+              아니오
+            </Button>
+          </ModalButtonWrapper>
+        </Modal>
+      </Layout>
+    </>
   );
 };
 
@@ -215,7 +118,8 @@ const Layout = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
-  background-image: url(${ScreenBackground});
+  padding-top: 1rem;
+  background-image: url(${Texture});
 `;
 
 const SubTopBar = styled.div`
@@ -233,14 +137,13 @@ const PointContainer = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: end;
-  padding-right: 1rem;
-  border-style: solid;
+  justify-content: space-between;
+  padding-right: 0.5rem;
+  border: solid 1.2px;
   border-radius: 1.5rem;
   border-color: ${(props) => props.theme.colors.orange};
+  background: 1rem;
   background-color: ${(props) => props.theme.colors.lightOrange};
-  font-size: 20px;
-  font-weight: bold;
 `;
 
 const Icon = styled.button`
@@ -249,29 +152,31 @@ const Icon = styled.button`
   background: transparent;
   font-family: 'Material Symbols Outlined', sans-serif;
   font-size: 2rem;
-  color: ${(props) => props.theme.colors.green};
+  color: ${(props) => props.theme.colors.orange};
   cursor: pointer;
 `;
 
 const Point = styled.div`
   display: flex;
-  padding-left: 0.9rem;
-  font-family: 'SUITE-Bold';
-  font-size: 20px;
-  font-weight: bold;
   flex-direction: row;
   align-items: center;
   justify-content: end;
+  font-family: 'SUITE-Bold', sans-serif;
+  font-size: 1.3rem;
 `;
 
-const IconWrapper = styled.div`
+const PriceIcon = styled.div`
+  padding-right: 0.3rem;
+  border: 0;
+  background: transparent;
   font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 1.3rem;
   color: ${(props) => props.theme.colors.orange};
-  cursor: default;
+  cursor: pointer;
 `;
 
 const ProductContainer = styled.div`
-  width: 350px;
+  width: 360px;
   height: 60%;
   margin: 0 auto 0 auto;
   border-radius: 20px;
@@ -293,7 +198,8 @@ const CategoryContainer = styled.div`
   align-items: center;
 `;
 
-const LeftIcon = styled.button`
+const LeftIcon = styled.div`
+  margin-left: 2rem;
   border: none;
   background-color: rgba(255, 255, 255, 0);
   font-family: 'Material Symbols Outlined';
@@ -302,12 +208,15 @@ const LeftIcon = styled.button`
 `;
 
 const CategoryTitle = styled.div`
+  width: 100%;
+  text-align: center;
   font-family: 'SUITE-SemiBold';
-  font-size: 24px;
+  font-size: 1.4rem;
   color: white;
 `;
 
-const RightIcon = styled.button`
+const RightIcon = styled.div`
+  margin-right: 2rem;
   border: none;
   background-color: rgba(255, 255, 255, 0);
   font-family: 'Material Symbols Outlined';
@@ -333,70 +242,61 @@ const ItemList = styled.ul`
 `;
 
 const ItemContainer = styled.button`
-  width: 92px;
-  height: 92px;
+  position: relative;
+  width: 100px;
+  height: 100px;
   padding: 0;
   margin-top: 10px;
   border: none;
-  border-radius: 10px;
+  border-radius: 0.9rem;
   background-color: white;
+  text-align: center;
 `;
 
-const ItemImg = styled.div`
-  width: 92px;
-  height: 70px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  background-color: gray;
+const ItemImg = styled.img`
+  display: block;
+  position: absolute;
+  margin: auto;
+  max-width: 100%;
+  object-fit: contain;
+  bottom: 0;
 `;
 
 const PriceWrapper = styled.div`
+  position: absolute;
   display: flex;
-  width: 92px;
-  height: 22px;
-  gap: 4px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-`;
-
-const PriceIcon = styled.div`
-  font-family: 'Material Symbols Outlined';
-  font-size: 18px;
-  color: ${(props) => props.theme.colors.orange};
-  &:before {
-    content: 'stars';
-  }
+  justify-content: center;
+  bottom: 0;
+  left: 25%;
 `;
 
 const PriceText = styled.div`
-  font-family: 'SUITE-Regular';
+  font-family: 'SUITE-Medium', sans-serif;
   font-size: 16px;
   color: black;
-  text-align: center;
 `;
 
-const BuyItemTitle = styled.div`
-  padding-top: 20px;
-  font-family: 'SUITE-Bold';
-  font-size: 20px;
-  text-align: center;
+const ModalBoldText = styled.span`
+  font-family: 'SUITE-Bold', sans-serif;
 `;
 
-const BuyConfirmText = styled.div`
-  font-family: 'SUITE-Regular';
-  font-size: 20px;
+const ModalText = styled.div`
+  padding: 1rem 0;
+  font-family: 'SUITE-Regular', sans-serif;
+  font-size: 1.3rem;
   text-align: center;
+  color: #000000;
+  line-height: 2rem;
+  white-space: pre-wrap; // \n 적용하기
 `;
 
 const BuyItemPriceWrapper = styled.div`
   display: flex;
-  height: 30px;
-  gap: 4px;
-  margin-top: 10px;
   justify-content: center;
   align-items: center;
+  padding-bottom: 0.5rem;
 `;
 
 const BuyItemPriceIcon = styled.div`
@@ -417,9 +317,7 @@ const BuyItemPriceText = styled.div`
 
 const ModalButtonWrapper = styled.div`
   display: flex;
-  gap: 20px;
-  margin-top: 20px;
-  justify-content: center;
+  justify-content: space-evenly;
 `;
 
 export default StoreDetailPage;
