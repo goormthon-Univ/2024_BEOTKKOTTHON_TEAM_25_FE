@@ -87,6 +87,7 @@ const HomePage = () => {
         {/* 미션 수행 전 */}
         <DailyMissionTitle>미션이 도착했어요! 💌</DailyMissionTitle>
         <DailyMissionContainer onClick={() => navigate('/daily-mission')}>
+          <TodayMission>오늘의 미션!</TodayMission>
           {dailyMission}
         </DailyMissionContainer>
         {/* 미션 완료 후 화면 */}
@@ -269,6 +270,12 @@ const DailyMissionTitle = styled.div`
   font-family: 'SUITE-Regular', sans-serif;
   font-size: 1.2rem;
   text-align: left;
+`;
+
+const TodayMission = styled.div`
+  padding-bottom: 0.5rem;
+  font-family: 'SUITE-Light';
+  font-size: 1.5rem;
 `;
 
 const DailyMissionContainer = styled.div`

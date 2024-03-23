@@ -30,6 +30,7 @@ const { actions, reducer } = createSlice({
     completedMissionCount: 0,
     completionRate: 0,
     friends: [],
+    friendId: 0,
   },
   reducers: {
     changeLoginField(state, { payload: { name, value } }) {
@@ -153,6 +154,13 @@ const { actions, reducer } = createSlice({
         friends,
       };
     },
+
+    setFriendId(state, { payload: friendId }) {
+      return {
+        ...state,
+        friendId,
+      };
+    },
   },
 });
 
@@ -174,6 +182,7 @@ export const {
   setCompletedMissionCount,
   setCompletionRate,
   setFriends,
+  setFriendId,
 } = actions;
 
 export function requestLogin() {
