@@ -5,21 +5,13 @@ import styled from 'styled-components';
 const Header = ({ point }) => {
   const navigate = useNavigate();
 
-  const handleClickBack = () => {
-    navigate(-1); //이전 페이지로 이동
-  };
-
-  const handleClick = () => {
-    navigate('/mypage');
-  };
-
   const determineHeader = () => {
     switch (location.pathname) {
       case '/home':
         return (
           <HeaderContainer>
             <LeftContainer>
-              <Icon>Home</Icon>홈 화면
+              <Icon>Home</Icon>내 지구
             </LeftContainer>
             <RightContainer>
               <PointContainer>
@@ -28,7 +20,7 @@ const Header = ({ point }) => {
                 </Icon>
                 <Point>{point}</Point>
               </PointContainer>
-              <ButtonWrapper onClick={handleClick}>
+              <ButtonWrapper onClick={() => navigate('/mypage')}>
                 <Icon>account_circle</Icon>
               </ButtonWrapper>
             </RightContainer>
@@ -36,6 +28,8 @@ const Header = ({ point }) => {
         );
 
       case '/records':
+      case '/record-categories':
+      case '/record-missions':
         return (
           <HeaderContainer>
             <LeftContainer>
@@ -44,7 +38,7 @@ const Header = ({ point }) => {
             </LeftContainer>
             <RightContainer>
               <ButtonWrapper>
-                <Icon>account_circle</Icon>
+                <Icon onClick={() => navigate('/mypage')}>account_circle</Icon>
               </ButtonWrapper>
             </RightContainer>
           </HeaderContainer>
@@ -54,16 +48,28 @@ const Header = ({ point }) => {
         return (
           <HeaderContainer>
             <LeftContainer>
-              <ButtonWrapper onClick={handleClickBack}>
+              <ButtonWrapper onClick={() => navigate(-1)}>
                 <Icon>arrow_back_ios</Icon>
               </ButtonWrapper>
               오늘의 미션
             </LeftContainer>
           </HeaderContainer>
         );
-
-      case '/friends-list':
       case '/friends':
+        return (
+          <HeaderContainer>
+            <LeftContainer>
+              <Icon>group</Icon>
+              친구 목록
+            </LeftContainer>
+            <RightContainer>
+              <ButtonWrapper onClick={() => navigate('/friends-list')}>
+                <Icon>group_add</Icon>
+              </ButtonWrapper>
+            </RightContainer>
+          </HeaderContainer>
+        );
+      case '/friends-list':
       case '/friends-profile':
         return (
           <HeaderContainer>
@@ -83,30 +89,32 @@ const Header = ({ point }) => {
         return (
           <HeaderContainer>
             <LeftContainer>
-              <Icon onClick={handleClickBack}>arrow_back_ios</Icon>
+              <Icon onClick={() => navigate(-1)}>arrow_back_ios</Icon>
               마이페이지
             </LeftContainer>
             <RightContainer>
-              <ButtonWrapper onClick={handleClick}>
+              <ButtonWrapper onClick={() => navigate('/mypage')}>
                 <Icon>account_circle </Icon>
               </ButtonWrapper>
             </RightContainer>
           </HeaderContainer>
         );
 
-      case '/마이룸': //마이룸 라우트 지정해주세요
+      case '/myroom':
         return (
           <HeaderContainer>
             <LeftContainer>
-              <Icon onClick={handleClickBack}>arrow_back_ios</Icon>
+              <Icon onClick={() => navigate(-1)}>arrow_back_ios</Icon>
               마이룸
             </LeftContainer>
-            <PointContainer>
-              <Icon>
-                <IconWrapper>stars</IconWrapper>
-              </Icon>
-              <Point>{point}</Point>
-            </PointContainer>
+            <RightContainer>
+              <PointContainer>
+                <Icon>
+                  <IconWrapper>stars</IconWrapper>
+                </Icon>
+                <Point>{point}</Point>
+              </PointContainer>
+            </RightContainer>
           </HeaderContainer>
         );
 
@@ -116,28 +124,28 @@ const Header = ({ point }) => {
       case '/store/2':
       case '/store/3':
       case '/store/4':
+      case '/store/5':
         return (
           <HeaderContainer>
             <LeftContainer>
-              <Icon onClick={handleClickBack}>storefront</Icon>
+              <Icon onClick={() => navigate(-1)}>storefront</Icon>
               상점
             </LeftContainer>
             <RightContainer>
-              <ButtonWrapper onClick={handleClick}>
+              <ButtonWrapper onClick={() => navigate('/mypage')}>
                 <Icon>account_circle </Icon>
               </ButtonWrapper>
             </RightContainer>
           </HeaderContainer>
         );
 
-      default: // /onboarding /login
+      default: // /onboarding /register /login /character-name-setting
         return (
           <HeaderContainer>
             <LeftContainer>
               <Icon>globe</Icon>
               Own Earth
             </LeftContainer>
-            <Icon>search</Icon>
           </HeaderContainer>
         );
     }
