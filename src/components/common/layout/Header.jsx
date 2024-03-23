@@ -1,9 +1,12 @@
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useState } from 'react';
 
 const Header = ({ point }) => {
   const navigate = useNavigate();
+
+  const [isSearchMode, setIsSearchMode] = useState(false);
 
   const determineHeader = () => {
     switch (location.pathname) {
@@ -56,6 +59,7 @@ const Header = ({ point }) => {
           </HeaderContainer>
         );
       case '/friends':
+      case '/friends-profile':
         return (
           <HeaderContainer>
             <LeftContainer>
@@ -70,19 +74,32 @@ const Header = ({ point }) => {
           </HeaderContainer>
         );
       case '/friends-list':
-      case '/friends-profile':
         return (
-          <HeaderContainer>
-            <LeftContainer>
-              <Icon>group</Icon>
-              친구 목록
-            </LeftContainer>
-            <RightContainer>
-              <ButtonWrapper>
-                <Icon>search</Icon>
-              </ButtonWrapper>
-            </RightContainer>
-          </HeaderContainer>
+          <>
+            {isSearchMode ? (
+              <HeaderContainer>
+                <LeftContainer>
+                  <Icon>search</Icon>
+                </LeftContainer>
+                <NameInput placeholder='검색' />
+                <RightContainer>
+                  <Button onClick={() => setIsSearchMode(!isSearchMode)}>취소</Button>
+                </RightContainer>
+              </HeaderContainer>
+            ) : (
+              <HeaderContainer>
+                <LeftContainer>
+                  <Icon>group</Icon>
+                  친구 목록
+                </LeftContainer>
+                <RightContainer>
+                  <ButtonWrapper>
+                    <Icon onClick={() => setIsSearchMode(!isSearchMode)}>search</Icon>
+                  </ButtonWrapper>
+                </RightContainer>
+              </HeaderContainer>
+            )}
+          </>
         );
 
       case '/mypage':
@@ -229,6 +246,29 @@ const IconWrapper = styled.div`
 const ButtonWrapper = styled.button`
   border: none;
   background: none;
+`;
+
+const NameInput = styled.input`
+  width: 14rem;
+  padding: 0.2rem 0 0.2rem 0.8rem;
+  border: none;
+  border-radius: 0.9rem;
+  background-color: #e5e5e5;
+  font-family: 'SUITE-Light', sans-serif;
+  font-size: 1.25rem;
+  text-align: left;
+`;
+
+const Button = styled.button`
+  width: 4.12rem;
+  height: 2.3rem;
+  border: none;
+  border-radius: 1.2rem;
+  background-color: #848484;
+  font-family: 'SUITE-Bold', sans-serif;
+  font-size: 1.1rem;
+  text-align: center;
+  color: white;
 `;
 
 export default Header;
