@@ -1,12 +1,32 @@
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { Header } from '../components/common/layout';
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Texture from '../assets/img/ScreenBackground.png';
 import EarthCharacter from '../assets/img/loadinganalyze.png';
+import { Header } from '../components/common/layout';
+import { postMissionPhoto } from '../services/api/mission';
 
 const LoadingAnalyze = () => {
   const earthName = useSelector((state) => state.earthName);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const file = location.state.file;
+
+  useEffect(() => {
+    if (!file) {
+      navigate('/loading-failure');
+    }
+    (async () => {
+      const { isCompleted } = await postMissionPhoto(file);
+      if (isCompleted) {
+        navigate('/loading-success');
+      } else {
+        navigate('/loading-failure');
+      }
+    })();
+  });
 
   return (
     <>

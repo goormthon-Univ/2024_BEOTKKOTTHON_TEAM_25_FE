@@ -53,3 +53,19 @@ export async function getCompletedMissions(month, category) {
     return completedMissions;
   }
 }
+
+export async function postMissionPhoto(file) {
+  const missionId = localStorage.getItem('missionId');
+  const formData = new FormData();
+  formData.append('image', file);
+
+  const response = await axios.post(`/api/v1/missions/${missionId}/completed`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+      Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
+    },
+  });
+
+  console.log(response.data.data);
+  return response.data.data;
+}

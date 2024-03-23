@@ -1,12 +1,14 @@
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { Header, Button } from '../components/common/layout';
+import { useNavigate } from 'react-router-dom';
 import Texture from '../assets/img/ScreenBackground.png';
 import EarthCharacter from '../assets/img/loadingsuccess.png';
+import { Button, Header } from '../components/common/layout';
 
 const LoadingSuccess = () => {
   const earthName = useSelector((state) => state.earthName);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -15,7 +17,7 @@ const LoadingSuccess = () => {
         <Text>오늘의 미션 성공</Text>
         <SmallText>{earthName}가 기뻐해요!</SmallText>
         <CharacterImg src={EarthCharacter} />
-        <RegisterBtnWrapper onClick={'확인 버튼 함수'}>
+        <RegisterBtnWrapper onClick={() => navigate('/home')}>
           <Button $bgColor={'green'} $textColor={'white'} size={'large'}>
             확인
           </Button>
