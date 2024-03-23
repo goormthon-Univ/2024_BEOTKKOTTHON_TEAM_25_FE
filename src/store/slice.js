@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 import { postLogin } from '../services/api/auth';
+import { getFriendsMonthlyFriendsData, getMyMonthlyFriendsData } from '../services/api/friends';
 import { getEarthStatus, getMyPoint } from '../services/api/home';
 import { changeDailyMission, getCompletedMissions, getDailyMission } from '../services/api/mission';
-import { getMyMonthlyFriendsData, getFriendsMonthlyFriendsData } from '../services/api/friends';
 
 import { saveItem } from '../services/storage';
 
@@ -161,6 +161,19 @@ const { actions, reducer } = createSlice({
         friendId,
       };
     },
+
+    setImageUrl(state, { payload: imageUrl }) {
+      return {
+        ...state,
+        imageUrl,
+      };
+    },
+    setIsCompleted(state, { payload: isComplete }) {
+      return {
+        ...state,
+        isComplete,
+      };
+    },
   },
 });
 
@@ -183,6 +196,8 @@ export const {
   setCompletionRate,
   setFriends,
   setFriendId,
+  setImageUrl,
+  setIsCompleted,
 } = actions;
 
 export function requestLogin() {
@@ -213,8 +228,11 @@ export function requestLogin() {
 
 export function loadHomeData() {
   return async (dispatch) => {
-    const [point, { usingItems, earthName, withDays }, { missionId, dailyMission }] =
-      await Promise.all([getMyPoint(), getEarthStatus(), getDailyMission()]);
+    const [
+      point,
+      { usingItems, earthName, withDays },
+      { missionId, dailyMission, imageUrl, isCompleted },
+    ] = await Promise.all([getMyPoint(), getEarthStatus(), getDailyMission()]);
 
     saveItem('missionId', missionId);
 
@@ -224,6 +242,8 @@ export function loadHomeData() {
     dispatch(setEarthName(earthName));
     dispatch(setMissionId(missionId));
     dispatch(setDailyMission(dailyMission));
+    dispatch(setImageUrl(imageUrl));
+    dispatch(setIsCompleted(isCompleted));
   };
 }
 

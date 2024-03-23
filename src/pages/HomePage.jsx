@@ -1,14 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { loadHomeData } from '../store/slice';
 
-import { Header, Footer } from '../components/common/layout';
-import Texture from '../assets/img/ScreenBackground.png';
 import GoodJob from '../assets/img/GoodJob.png';
+import Texture from '../assets/img/ScreenBackground.png';
 import Earth from '../assets/img/earth.png';
+import { Footer, Header } from '../components/common/layout';
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -23,6 +23,8 @@ const HomePage = () => {
   const earthName = useSelector((state) => state.earthName);
   const usingItems = useSelector((state) => state.usingItems);
   const dailyMission = useSelector((state) => state.dailyMission);
+  const imageUrl = useSelector((state) => state.imageUrl);
+  const isCompleted = useSelector((state) => state.isCompleted);
 
   const [clothImageUrl, setClothImageUrl] = useState('');
   const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
@@ -85,16 +87,23 @@ const HomePage = () => {
           </MyRoomBtn>
         </CharacterInfoContainer>
         {/* 미션 수행 전 */}
-        <DailyMissionTitle>미션이 도착했어요! 💌</DailyMissionTitle>
-        <DailyMissionContainer onClick={() => navigate('/daily-mission')}>
-          <TodayMission>오늘의 미션!</TodayMission>
-          {dailyMission}
-        </DailyMissionContainer>
-        {/* 미션 완료 후 화면 */}
-        {/* <DailyMissionTitle>오늘의 미션 완료 !</DailyMissionTitle>
-        <DailyMissionContainer onClick={() => navigate('/records')}>
-          <GoodJobImg src={GoodJob} />
-        </DailyMissionSuccessContainer> */}
+
+        {isCompleted ? (
+          <>
+            <DailyMissionTitle>미션이 도착했어요! 💌</DailyMissionTitle>
+            <DailyMissionContainer onClick={() => navigate('/daily-mission')}>
+              <TodayMission>오늘의 미션!</TodayMission>
+              {dailyMission}
+            </DailyMissionContainer>
+          </>
+        ) : (
+          <>
+            <DailyMissionTitle>오늘의 미션 완료 !</DailyMissionTitle>
+            <DailyMissionSuccessContainer $imageUrl={imageUrl} onClick={() => navigate('/records')}>
+              <GoodJobImg src={GoodJob} />
+            </DailyMissionSuccessContainer>
+          </>
+        )}
       </Layout>
       <Footer />
     </>
@@ -296,8 +305,7 @@ const DailyMissionSuccessContainer = styled.div`
   padding-top: 1.5rem;
   height: 14rem;
   border-radius: 0.9rem;
-  background-image: url(${'미션 완료한 이미지'});
-  background-color: ${(props) => props.theme.colors.blue};
+  background-color: ${(props) => props.theme.colors.green};
   font-family: 'SUITE-SemiBold', sans-serif;
   font-size: 1.5rem;
   text-align: center;
