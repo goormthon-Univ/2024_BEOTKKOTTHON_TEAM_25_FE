@@ -3,7 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 import { postLogin } from '../services/api/auth';
 import { getEarthStatus, getMyPoint } from '../services/api/home';
 import { changeDailyMission, getCompletedMissions, getDailyMission } from '../services/api/mission';
-import { getMyMonthlyFriendsData, getFriendsMonthlyFriendsData } from '../services/api/friends';
+import {
+  getMyMonthlyFriendsData,
+  getFriendsMonthlyFriendsData,
+  getFriendDetailPageData,
+} from '../services/api/friends';
 
 import { saveItem } from '../services/storage';
 
@@ -31,6 +35,8 @@ const { actions, reducer } = createSlice({
     completionRate: 0,
     friends: [],
     friendId: 0,
+    friendProfile: [],
+    friendItem: [],
   },
   reducers: {
     changeLoginField(state, { payload: { name, value } }) {
@@ -161,6 +167,20 @@ const { actions, reducer } = createSlice({
         friendId,
       };
     },
+
+    setFriendProfile(state, { payload: friendProfile }) {
+      return {
+        ...state,
+        friendProfile,
+      };
+    },
+
+    setFriendItem(state, { payload: friendItem }) {
+      return {
+        ...state,
+        friendItem,
+      };
+    },
   },
 });
 
@@ -183,6 +203,8 @@ export const {
   setCompletionRate,
   setFriends,
   setFriendId,
+  setFriendProfile,
+  setFriendItem,
 } = actions;
 
 export function requestLogin() {
@@ -260,6 +282,14 @@ export function loadFriendsData() {
     dispatch(setAccumulatedPoint(accumulatedPoint));
     dispatch(setCompletionRate(completionRate));
     dispatch(setFriends(response));
+  };
+}
+
+export function loadFriendDetailData() {
+  return async (dispatch, getState) => {
+    const { friendId } = getState();
+    const data = await getFriendDetailPageData(friendId);
+    dispatch(setFriendProfile(data));
   };
 }
 
