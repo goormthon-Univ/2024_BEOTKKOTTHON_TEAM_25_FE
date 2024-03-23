@@ -66,7 +66,7 @@ const DailyMissonPage = () => {
             <MissionText>{dailyMission}</MissionText>
           </MissionWrapper>
         </BlueBox>
-        <TipWrapper>{/* 팁 문구 */}</TipWrapper>
+        <TipWrapper>tip ) 미션을 하는 행동과 사물이 잘 보이게 찍어주세요</TipWrapper>
         <input
           type='file'
           ref={fileInputRef}
