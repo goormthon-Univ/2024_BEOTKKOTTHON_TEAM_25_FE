@@ -28,6 +28,5 @@ export const buyItem = async (itemId) => {
       headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
     },
   );
-  console.log(response);
   return response;
 };
