@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
@@ -21,8 +21,38 @@ const HomePage = () => {
   const point = useSelector((state) => state.point);
   const withDays = useSelector((state) => state.withDays);
   const earthName = useSelector((state) => state.earthName);
-  // const usingItems = useSelector((state) => state.usingItems); 옷 장착 상태
+  const usingItems = useSelector((state) => state.usingItems);
   const dailyMission = useSelector((state) => state.dailyMission);
+
+  const [clothImageUrl, setClothImageUrl] = useState('');
+  const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
+  const [upperLeftImageUrl, setUpperLeftImageUrl] = useState('');
+  const [lowerLeftImageUrl, setLowerLeftImageUrl] = useState('');
+  const [upperRightImageUrl, setUpperRightImageUrl] = useState('');
+  const [lowerRightImageUrl, setLowerRightImageUrl] = useState('');
+
+  useEffect(() => {
+    for (let i = 0; i < usingItems.length; i++) {
+      if (usingItems[i].itemCategory === 'CLOTHING') {
+        setClothImageUrl(usingItems[i].imageUrl);
+      }
+      if (usingItems[i].itemCategory === 'BACKGROUND') {
+        setBackgroundImageUrl(usingItems[i].imageUrl);
+      }
+      if (usingItems[i].itemCategory === 'UPPER_LEFT') {
+        setUpperLeftImageUrl(usingItems[i].imageUrl);
+      }
+      if (usingItems[i].itemCategory === 'LOWER_LEFT') {
+        setLowerLeftImageUrl(usingItems[i].imageUrl);
+      }
+      if (usingItems[i].itemCategory === 'UPPER_RIGHT') {
+        setUpperRightImageUrl(usingItems[i].imageUrl);
+      }
+      if (usingItems[i].itemCategory === 'LOWER_RIGHT') {
+        setLowerRightImageUrl(usingItems[i].imageUrl);
+      }
+    }
+  }, [usingItems]);
 
   return (
     <>
@@ -33,13 +63,21 @@ const HomePage = () => {
             {earthName}와 함께한지 {withDays}일 째
           </CharacterInfo>
           <CharacterContainer>
-            <CharacterBackgroundImg />
-            <TopLeftItem />
-            <TopRightItem />
-            <BottomLeftItem />
-            <BottomRightItem />
+            {backgroundImageUrl ? (
+              <CharacterBackgroundImg src={backgroundImageUrl} />
+            ) : (
+              <CharacterBackgroundFake />
+            )}
+            {upperLeftImageUrl ? <TopLeftItem src={upperLeftImageUrl} /> : <TopLeftFake />}
+            {upperRightImageUrl ? <TopRightItem src={upperRightImageUrl} /> : <TopRightFake />}
+            {lowerLeftImageUrl ? <BottomLeftItem src={lowerLeftImageUrl} /> : <BottomLeftFake />}
+            {lowerRightImageUrl ? (
+              <BottomRightItem src={lowerRightImageUrl} />
+            ) : (
+              <BottomRightFake />
+            )}
             <CharacterImg src={Earth} />
-            <OutfitImg />
+            {clothImageUrl ? <OutfitImg src={clothImageUrl} /> : <OutfitFake />}
           </CharacterContainer>
           <MyRoomBtn onClick={() => navigate('/myroom')}>
             <MyRoomIcon />
@@ -100,7 +138,14 @@ const CharacterContainer = styled.div`
   border-radius: 0.9rem;
 `;
 
-const CharacterBackgroundImg = styled.div`
+const CharacterBackgroundFake = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 0.9rem;
+  object-fit: cover;
+`;
+
+const CharacterBackgroundImg = styled.img`
   width: 100%;
   height: 100%;
   border-radius: 0.9rem;
@@ -114,14 +159,21 @@ const CharacterImg = styled.img`
   object-fit: cover;
 `;
 
-const OutfitImg = styled.div`
+const OutfitFake = styled.div`
+  position: absolute;
+  bottom: 0;
+  max-width: 100%;
+  object-fit: covimg;
+`;
+
+const OutfitImg = styled.img`
   position: absolute;
   bottom: 0;
   max-width: 100%;
   object-fit: cover;
 `;
 
-const TopLeftItem = styled.div`
+const TopLeftFake = styled.div`
   position: absolute;
   top: 0%;
   left: 0%;
@@ -129,7 +181,15 @@ const TopLeftItem = styled.div`
   object-fit: contain;
 `;
 
-const TopRightItem = styled.div`
+const TopLeftItem = styled.img`
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  max-width: 100%;
+  object-fit: contain;
+`;
+
+const TopRightFake = styled.div`
   position: absolute;
   top: 0%;
   right: 0%;
@@ -137,7 +197,15 @@ const TopRightItem = styled.div`
   object-fit: contain;
 `;
 
-const BottomLeftItem = styled.div`
+const TopRightItem = styled.img`
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  max-width: 100%;
+  object-fit: contain;
+`;
+
+const BottomLeftFake = styled.div`
   position: absolute;
   bottom: 0%;
   left: 0%;
@@ -145,7 +213,23 @@ const BottomLeftItem = styled.div`
   object-fit: contain;
 `;
 
-const BottomRightItem = styled.div`
+const BottomLeftItem = styled.img`
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+  max-width: 100%;
+  object-fit: contain;
+`;
+
+const BottomRightFake = styled.div`
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  max-width: 100%;
+  object-fit: contain;
+`;
+
+const BottomRightItem = styled.img`
   position: absolute;
   bottom: 0%;
   right: 0%;
