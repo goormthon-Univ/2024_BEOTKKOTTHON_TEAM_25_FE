@@ -17,3 +17,11 @@ export async function getFriendsMonthlyFriendsData() {
 
   return response.data.data;
 }
+
+export async function getFriendDetailPageData(friendId) {
+  const response = await axios.get(`/api/v1/members/${friendId}/earth`, {
+    headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
+  });
+
+  return response.data.data;
+}

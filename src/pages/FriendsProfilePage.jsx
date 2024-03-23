@@ -1,21 +1,79 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+
+import { loadFriendDetailData } from '../store/slice';
 
 import { Header, Footer, Modal } from '../components/common/layout';
 import EarthImage from '../assets/img/earth.png';
 import Texture from '../assets/img/ScreenBackground.png';
 
 const FriendsProfilePage = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadFriendDetailData());
+  }, []);
+
+  const friendProfile = useSelector((state) => state.friendProfile);
+
+  const {
+    name,
+    earthName,
+    accumulatedPoint,
+    inventoryCount,
+    usingItems = [],
+    completedTimes = [],
+  } = friendProfile || [];
+
   // 요일과 완료 여부를 포함하는 배열
   const days = [
-    { name: '일', completed: true },
-    { name: '월', completed: true },
-    { name: '화', completed: true },
+    { name: '일', completed: false },
+    { name: '월', completed: false },
+    { name: '화', completed: false },
     { name: '수', completed: false },
-    { name: '목', completed: true },
+    { name: '목', completed: false },
     { name: '금', completed: false },
-    { name: '토', completed: true },
+    { name: '토', completed: false },
   ];
+
+  for (let completedTime of completedTimes) {
+    for (let i = 0; i < days.length; i++) {
+      if (completedTime === days[i]['name']) {
+        days[i]['completed'] = true;
+      }
+    }
+  }
+
+  const [clothImageUrl, setClothImageUrl] = useState('');
+  const [backgroundImageUrl, setBackgroundImageUrl] = useState('');
+  const [upperLeftImageUrl, setUpperLeftImageUrl] = useState('');
+  const [lowerLeftImageUrl, setLowerLeftImageUrl] = useState('');
+  const [upperRightImageUrl, setUpperRightImageUrl] = useState('');
+  const [lowerRightImageUrl, setLowerRightImageUrl] = useState('');
+
+  useEffect(() => {
+    for (let i = 0; i < usingItems.length; i++) {
+      if (usingItems[i].itemCategory === 'CLOTHING') {
+        setClothImageUrl(usingItems[i].imageUrl);
+      }
+      if (usingItems[i].itemCategory === 'BACKGROUND') {
+        setBackgroundImageUrl(usingItems[i].imageUrl);
+      }
+      if (usingItems[i].itemCategory === 'UPPER_LEFT') {
+        setUpperLeftImageUrl(usingItems[i].imageUrl);
+      }
+      if (usingItems[i].itemCategory === 'LOWER_LEFT') {
+        setLowerLeftImageUrl(usingItems[i].imageUrl);
+      }
+      if (usingItems[i].itemCategory === 'UPPER_RIGHT') {
+        setUpperRightImageUrl(usingItems[i].imageUrl);
+      }
+      if (usingItems[i].itemCategory === 'LOWER_RIGHT') {
+        setLowerRightImageUrl(usingItems[i].imageUrl);
+      }
+    }
+  }, [usingItems]);
 
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -27,31 +85,37 @@ const FriendsProfilePage = () => {
     <main>
       <Header />
       <FriendProfilePage>
-        <Name>이구름의</Name>
+        <Name>{name}의</Name>
         <EarthName>
           <EarthIcon>public</EarthIcon>
-          지구젤리
+          {earthName}
         </EarthName>
         <CharacterContainer>
-          <CharacterBackgroundImg />
-          <TopLeftItem />
-          <TopRightItem />
-          <BottomLeftItem />
-          <BottomRightItem />
-          <CharacterImg src={EarthImage} alt='friend-character' />
-          <OutfitImg />
+          {backgroundImageUrl ? (
+            <CharacterBackgroundImg src={backgroundImageUrl} />
+          ) : (
+            <CharacterBackgroundFake />
+          )}
+          {upperLeftImageUrl ? <TopLeftItem src={upperLeftImageUrl} /> : <TopLeftFake />}
+          {upperRightImageUrl ? <TopRightItem src={upperRightImageUrl} /> : <TopRightFake />}
+          {lowerLeftImageUrl ? <BottomLeftItem src={lowerLeftImageUrl} /> : <BottomLeftFake />}
+          {lowerRightImageUrl ? <BottomRightItem src={lowerRightImageUrl} /> : <BottomRightFake />}
+          <CharacterImg src={EarthImage} />
+          {clothImageUrl ? <OutfitImg src={clothImageUrl} /> : <OutfitFake />}
         </CharacterContainer>
         <InfoContainer>
           <InfoBox>
             <InfoLabel>보유 포인트</InfoLabel>
             <IconContainer>
-              <PointIcon>stars</PointIcon>180P
+              <PointIcon>stars</PointIcon>
+              {accumulatedPoint}P
             </IconContainer>
           </InfoBox>
           <InfoBox onClick={toggleModal}>
             <InfoLabel>보유 아이템</InfoLabel>
             <IconContainer>
-              <ItemIcon>styler</ItemIcon>3개
+              <ItemIcon>styler</ItemIcon>
+              {inventoryCount}개
             </IconContainer>
           </InfoBox>
         </InfoContainer>
@@ -150,6 +214,13 @@ const CharacterContainer = styled.div`
   background-color: white;
 `;
 
+const CharacterBackgroundFake = styled.div`
+  width: 100%;
+  height: 100%;
+  border-radius: 0.9rem;
+  object-fit: cover;
+`;
+
 const CharacterBackgroundImg = styled.img`
   width: 100%;
   height: 100%;
@@ -164,6 +235,13 @@ const CharacterImg = styled.img`
   object-fit: cover;
 `;
 
+const OutfitFake = styled.div`
+  position: absolute;
+  bottom: 0;
+  max-width: 100%;
+  object-fit: covimg;
+`;
+
 const OutfitImg = styled.img`
   position: absolute;
   bottom: 0;
@@ -171,10 +249,26 @@ const OutfitImg = styled.img`
   object-fit: cover;
 `;
 
+const TopLeftFake = styled.div`
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  max-width: 100%;
+  object-fit: contain;
+`;
+
 const TopLeftItem = styled.img`
   position: absolute;
   top: 0%;
   left: 0%;
+  max-width: 100%;
+  object-fit: contain;
+`;
+
+const TopRightFake = styled.div`
+  position: absolute;
+  top: 0%;
+  right: 0%;
   max-width: 100%;
   object-fit: contain;
 `;
@@ -187,10 +281,26 @@ const TopRightItem = styled.img`
   object-fit: contain;
 `;
 
+const BottomLeftFake = styled.div`
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+  max-width: 100%;
+  object-fit: contain;
+`;
+
 const BottomLeftItem = styled.img`
   position: absolute;
   bottom: 0%;
   left: 0%;
+  max-width: 100%;
+  object-fit: contain;
+`;
+
+const BottomRightFake = styled.div`
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
   max-width: 100%;
   object-fit: contain;
 `;

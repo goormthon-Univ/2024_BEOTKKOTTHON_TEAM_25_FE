@@ -82,7 +82,7 @@ const TitleText = styled.div`
 const MonthlyContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
   padding: 1rem 1.5rem;
   border-radius: 0.9rem;
   box-shadow: 0px 0.25rem 0.75rem rgba(0, 0, 0, 0.25);
@@ -211,7 +211,7 @@ const FriendWrapper = styled.div`
   overflow: scroll;
   display: flex;
   flex-direction: column;
-  height: 50%;
+  height: 250px;
   padding: 0 0.5rem;
   width: 100%;
 `;
