@@ -35,39 +35,43 @@ const FriendsListPage = () => {
         <InviteButton onClick={toggleInviteModal} $active={isActive}>
           <InviteIcon $active={isActive}>add_circle</InviteIcon>친구 초대
         </InviteButton>
-        <FriendListContainer>
-          <IconWrapper>
-            <FaceIcon>sentiment_very_satisfied</FaceIcon>
-            김구름
-          </IconWrapper>
-          <SmallButtonWrapper>
-            <Button
-              $bgColor={'lightBlue'}
-              $textColor={'white'}
-              size={'small'}
-              onClick={toggleDeleteModal}
-            >
-              삭제
-            </Button>
-          </SmallButtonWrapper>
-        </FriendListContainer>
+        <FriendWrapper>
+          <FriendListContainer>
+            <IconWrapper>
+              <FaceIcon>sentiment_very_satisfied</FaceIcon>
+              <FriendText>김구름</FriendText>
+            </IconWrapper>
+            <SmallButtonWrapper>
+              <Button
+                $bgColor={'lightBlue'}
+                $textColor={'white'}
+                size={'small'}
+                onClick={toggleDeleteModal}
+              >
+                삭제
+              </Button>
+            </SmallButtonWrapper>
+          </FriendListContainer>
+        </FriendWrapper>
         <TitleText>친구 요청</TitleText>
-        <FriendRequestContainer>
-          <IconWrapper>
-            <EarthIcon>public</EarthIcon>
-            김구름
-          </IconWrapper>
-          <SmallButtonWrapper>
-            <Button
-              $bgColor={'orange'}
-              $textColor={'black'}
-              size={'small'}
-              onClick={toggleAcceptModal}
-            >
-              수락
-            </Button>
-          </SmallButtonWrapper>
-        </FriendRequestContainer>
+        <FriendWrapper>
+          <FriendRequestContainer>
+            <IconWrapper>
+              <EarthIcon>public</EarthIcon>
+              <FriendText>김구름</FriendText>
+            </IconWrapper>
+            <SmallButtonWrapper>
+              <Button
+                $bgColor={'orange'}
+                $textColor={'black'}
+                size={'small'}
+                onClick={toggleAcceptModal}
+              >
+                수락
+              </Button>
+            </SmallButtonWrapper>
+          </FriendRequestContainer>
+        </FriendWrapper>
       </FriendListPage>
       <Footer />
       <Modal isOpen={isInviteModalOpen} onRequestClose={toggleInviteModal}>
@@ -80,10 +84,12 @@ const FriendsListPage = () => {
             <Icon>search</Icon>
           </ModalIconWrapper>
         </SearchBox>
-        <SearchResult onClick={handleFriendClick} $active={isPressed}>
-          <SearchResultCircle />
-          지구 이름
-        </SearchResult>
+        <SearchResultWrapper>
+          <SearchResult onClick={handleFriendClick} $active={isPressed}>
+            <SearchResultCircle />
+            지구 이름
+          </SearchResult>
+        </SearchResultWrapper>
         <ModalButtonWrapper>
           <Button
             $bgColor={'blue'}
@@ -167,6 +173,14 @@ const InviteIcon = styled.div`
   color: ${(props) => (props.$active ? 'white' : props.theme.colors.green)};
 `;
 
+const FriendWrapper = styled.div`
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  height: 50%;
+  padding: 0 0.5rem;
+`;
+
 const FriendListContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -195,7 +209,13 @@ const IconWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 0.3rem 1rem;
+  width: 100%;
+  padding-right: 9rem;
+  padding-left: 0.5rem;
+`;
+
+const FriendText = styled.div`
+  width: 50px;
 `;
 
 const SmallButtonWrapper = styled.div`
@@ -205,6 +225,7 @@ const SmallButtonWrapper = styled.div`
 const TitleText = styled.div`
   width: 100%;
   padding-top: 2rem;
+  padding-bottom: 0.4rem;
   font-family: 'SUITE-Bold', sans-serif;
   font-size: 1.5rem;
   text-align: left;
@@ -219,7 +240,7 @@ const FriendRequestContainer = styled.div`
   width: 100%;
   margin-top: 1.5rem;
   padding: 0.5rem 0;
-  border: solid;
+  border: solid 1px;
   border-radius: 2rem;
   border-color: ${(props) => props.theme.colors.orange};
   box-shadow: 0px 0.25rem 0.75rem rgba(0, 0, 0, 0.25);
@@ -307,7 +328,7 @@ const SearchResult = styled.button`
   justify-content: start;
   width: 100%;
   height: fit-content;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
   padding: 0.8rem 0;
   border: none;
   border-radius: 0.8rem;
@@ -315,6 +336,13 @@ const SearchResult = styled.button`
   font-family: 'SUITE-Medium', sans-serif;
   font-size: 1rem;
   color: #404040;
+`;
+
+const SearchResultWrapper = styled.div`
+  overflow: scroll;
+  display: flex;
+  flex-direction: column;
+  height: 150px;
 `;
 
 const SearchResultCircle = styled.div`
