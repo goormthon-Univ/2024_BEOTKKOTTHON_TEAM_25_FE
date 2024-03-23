@@ -6,6 +6,9 @@ import {
   FriendsPage,
   FriendsProfilePage,
   HomePage,
+  LoadingAnalyze,
+  LoadingFailure,
+  LoadingSuccess,
   LoginPage,
   MyPage,
   MyRoomPage,
@@ -28,6 +31,9 @@ const Router = () => {
         <Route path='/friends-profile' element={<FriendsProfilePage />} />
         <Route path='/' element={<div>🌏 온 지구 : Own Earth 🌏</div>} />
         <Route path='/home' element={<HomePage />} />
+        <Route path='/loading-analyze' element={<LoadingAnalyze />} />
+        <Route path='/loading-failure' element={<LoadingFailure />} />
+        <Route path='/loading-success' element={<LoadingSuccess />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/myroom' element={<MyRoomPage />} />
