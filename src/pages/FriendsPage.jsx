@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { loadFriendsData } from '../store/slice';
@@ -9,6 +10,7 @@ import Texture from '../assets/img/ScreenBackground.png';
 
 const FriendsPage = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(loadFriendsData());
@@ -24,7 +26,7 @@ const FriendsPage = () => {
       <Header />
       <Layout>
         <TitleText>월간 미션 달성률</TitleText>
-        <MonthlyContainer>
+        <MonthlyContainer onClick={() => navigate('/mypage')}>
           <PointTitle>
             누적 포인트<PointIcon>stars</PointIcon>
             <PointText>{accumulatedPoint}</PointText>
@@ -39,7 +41,7 @@ const FriendsPage = () => {
           </ProgressBar>
         </MonthlyContainer>
         <TitleText>친구</TitleText>
-        <FriendBox>
+        <FriendBox onClick={() => navigate('/friends-profile')}>
           <FaceIcon>sentiment_very_satisfied</FaceIcon>
           <FriendInfoContainer>
             <FriendPointWrapper>

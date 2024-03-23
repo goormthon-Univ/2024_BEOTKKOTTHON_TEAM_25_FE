@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import { Header, Footer, Modal } from '../components/common/layout';
-import EarthImage from '../assets/img/own-earth-char.png';
+import EarthImage from '../assets/img/earth.png';
 import Texture from '../assets/img/ScreenBackground.png';
 
 const FriendsProfilePage = () => {
@@ -29,10 +29,17 @@ const FriendsProfilePage = () => {
       <FriendProfilePage>
         <Name>이구름의</Name>
         <EarthName>
-          <EarthIcon>public</EarthIcon>지구젤리
+          <EarthIcon>public</EarthIcon>
+          지구젤리
         </EarthName>
         <CharacterContainer>
-          <EarthCharacter src={EarthImage} alt='friend-character' />
+          <CharacterBackgroundImg />
+          <TopLeftItem />
+          <TopRightItem />
+          <BottomLeftItem />
+          <BottomRightItem />
+          <CharacterImg src={EarthImage} alt='friend-character' />
+          <OutfitImg />
         </CharacterContainer>
         <InfoContainer>
           <InfoBox>
@@ -102,47 +109,98 @@ const FriendProfilePage = styled.div`
   align-items: center;
   height: 700px;
   padding: 0 1.5rem;
-  padding-top: 5rem;
+  padding-top: 4.5rem;
   background-image: url=(${Texture});
 `;
 
 const Name = styled.div`
-  padding: 0.4rem 0;
+  padding: 0.3rem 0;
   font-family: 'SUITE-Regular', sans-serif;
   font-size: 1.2rem;
+  text-align: center;
 `;
 
-const EarthName = styled.div`
+const EarthName = styled.span`
   display: flex;
   flex-direction: row;
   align-items: center;
   padding-bottom: 0.9rem;
+  padding-right: 2rem;
   font-family: 'SUITE-SemiBold', sans-serif;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
 `;
 
-const EarthIcon = styled.div`
-  padding-right: 0.5rem;
+const EarthIcon = styled.span`
+  padding-right: 0.4rem;
   font-family: 'Material Symbols Outlined', sans-serif;
   font-size: 1.5rem;
   color: #c9c9c9;
 `;
 
 const CharacterContainer = styled.div`
-  overflow: hidden;
+  overflow: hidden; //자식 요소가(=꾸미기 아이템) 컨테이너 밖으로 나가지 않도록 설정
+  position: relative;
+  width: 300px;
+  height: 300px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  width: 100%;
-  border: 0.1rem solid #0000001a;
-  border-radius: 1.5rem;
+  align-items: center;
+  border-radius: 0.9rem;
   box-shadow: 0px 0.25rem 0.75rem rgba(0, 0, 0, 0.25);
-  background-color: #ffffff;
+  background-color: white;
 `;
 
-const EarthCharacter = styled.img`
-  width: 13rem;
+const CharacterBackgroundImg = styled.img`
+  width: 100%;
+  height: 100%;
+  border-radius: 0.9rem;
   object-fit: cover;
+`;
+
+const CharacterImg = styled.img`
+  position: absolute;
+  bottom: 0;
+  max-width: 100%;
+  object-fit: cover;
+`;
+
+const OutfitImg = styled.img`
+  position: absolute;
+  bottom: 0;
+  max-width: 100%;
+  object-fit: cover;
+`;
+
+const TopLeftItem = styled.img`
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  max-width: 100%;
+  object-fit: contain;
+`;
+
+const TopRightItem = styled.img`
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  max-width: 100%;
+  object-fit: contain;
+`;
+
+const BottomLeftItem = styled.img`
+  position: absolute;
+  bottom: 0%;
+  left: 0%;
+  max-width: 100%;
+  object-fit: contain;
+`;
+
+const BottomRightItem = styled.img`
+  position: absolute;
+  bottom: 0%;
+  right: 0%;
+  max-width: 100%;
+  object-fit: contain;
 `;
 
 const InfoContainer = styled.div`
