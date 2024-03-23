@@ -97,7 +97,7 @@ function RecordCategories() {
 }
 
 const Layout = styled.div`
-  height: 700px;
+  height: 600px;
   padding-top: 5rem;
   background-image: url(${Texture});
 `;
@@ -111,9 +111,9 @@ const MonthlySection = styled.div`
   justify-content: center;
 `;
 
-const BeforeIcon = styled.button`
+const BeforeIcon = styled.div`
   font-family: 'Material Symbols Outlined';
-  font-size: 36px;
+  font-size: 2rem;
   &:before {
     content: 'navigate_before';
   }
@@ -122,9 +122,9 @@ const BeforeIcon = styled.button`
   color: ${(props) => props.theme.colors.green};
 `;
 
-const AfterIcon = styled.button`
+const AfterIcon = styled.div`
   font-family: 'Material Symbols Outlined';
-  font-size: 36px;
+  font-size: 2rem;
   &:before {
     content: 'navigate_next';
   }

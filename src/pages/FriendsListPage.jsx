@@ -214,7 +214,7 @@ const FriendsListPage = () => {
             size={'medium'}
             onClick={() => handleAcceptYesClick(selectedRequest.requestId)}
           >
-            예
+            수락하기
           </Button>
           <Button
             $bgColor={'blue'}
@@ -222,7 +222,7 @@ const FriendsListPage = () => {
             size={'medium'}
             onClick={toggleAcceptModal}
           >
-            아니오
+            뒤로가기
           </Button>
         </ModalButtonWrapper>
       </Modal>

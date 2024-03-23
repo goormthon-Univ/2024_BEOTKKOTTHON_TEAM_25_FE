@@ -178,7 +178,7 @@ const Icon = styled.div`
 
 const BeforeIcon = styled.div`
   font-family: 'Material Symbols Outlined';
-  font-size: 36px;
+  font-size: 2rem;
   &:before {
     content: 'navigate_before';
   }
@@ -187,7 +187,7 @@ const BeforeIcon = styled.div`
 
 const AfterIcon = styled.div`
   font-family: 'Material Symbols Outlined';
-  font-size: 36px;
+  font-size: 2rem;
   &:before {
     content: 'navigate_next';
   }
