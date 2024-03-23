@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { getMyInventory } from '../services/api/member';
+import { getMyInventory, toggleItemUsing } from '../services/api/member';
 import { Modal } from './common/layout';
 
 const MyRoomModal = ({ isOpen, toggleOutfitModal, category }) => {
@@ -21,6 +21,10 @@ const MyRoomModal = ({ isOpen, toggleOutfitModal, category }) => {
       console.error(error);
     }
   }, [memberId, category]);
+
+  const handleClickItem = async (itemId) => {
+    await toggleItemUsing(itemId);
+  };
 
   return (
     <Modal
@@ -41,7 +45,7 @@ const MyRoomModal = ({ isOpen, toggleOutfitModal, category }) => {
       </ModalText>
       <ModalContainer>
         {items.map((item) => (
-          <ModalItemContainer key={item.itemId}>
+          <ModalItemContainer key={item.itemId} onClick={() => handleClickItem(item.itemId)}>
             <Item src={item.imageUrl} alt='item' />
             <ItemTitle>{item.name}</ItemTitle>
           </ModalItemContainer>
