@@ -80,12 +80,10 @@ const FriendsListPage = () => {
             <Icon>search</Icon>
           </ModalIconWrapper>
         </SearchBox>
-        <SearchResultBox>
-          <SearchResult onClick={handleFriendClick} $active={isPressed}>
-            <SearchResultCircle />
-            지구 이름
-          </SearchResult>
-        </SearchResultBox>
+        <SearchResult onClick={handleFriendClick} $active={isPressed}>
+          <SearchResultCircle />
+          지구 이름
+        </SearchResult>
         <ModalButtonWrapper>
           <Button
             $bgColor={'blue'}
@@ -265,8 +263,8 @@ const SearchBox = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 15rem;
-  margin: 1rem 0.8rem;
+  width: 100%;
+  margin: 1rem 0;
   border: none;
   border-radius: 0.8rem;
   background-color: #e5e5e5;
@@ -302,24 +300,12 @@ const Icon = styled.div`
   color: ${(props) => props.theme.colors.green};
 `;
 
-const SearchResultBox = styled.div`
-  overflow-y: auto;
-  display: flex;
-  justify-content: center;
-  width: 15rem;
-  height: 11.5rem;
-  margin: 1rem 0.8rem;
-  border: none;
-  border-radius: 0.8rem;
-  background-color: #e5e5e5;
-`;
-
 const SearchResult = styled.button`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: start;
-  width: 13rem;
+  width: 100%;
   height: fit-content;
   margin: 1rem 0;
   padding: 0.8rem 0;
@@ -344,6 +330,7 @@ const ModalButtonWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+  padding-top: 2rem;
 `;
 
 const ModalText = styled.div`
