@@ -1,20 +1,11 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-
-import { loadHomeData } from '../store/slice';
 
 import { Header, Button } from '../components/common/layout';
 import Texture from '../assets/img/ScreenBackground.png';
 import EarthCharacter from '../assets/img/loadingsuccess.png';
 
 const LoadingSuccess = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(loadHomeData());
-  }, []);
-
   const earthName = useSelector((state) => state.earthName);
 
   return (
