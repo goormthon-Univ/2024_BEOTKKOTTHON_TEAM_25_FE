@@ -26,11 +26,7 @@ const Footer = () => {
         </Icon>
         <Icon
           onClick={handleClickRecords}
-          $active={
-            location.pathname === '/records' ||
-            location.pathname === '/record-categories' ||
-            location.pathname === '/record-missions'
-          }
+          $active={location.pathname === '/records' || location.pathname === '/record-categories'}
         >
           photo_library
         </Icon>
