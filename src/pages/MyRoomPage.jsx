@@ -34,56 +34,62 @@ const MyRoomPage = () => {
         <ButtonContainer>
           <ButtonCategoriesContainer>
             <CategoriesItem
-              alt='categories'
               onClick={(e) => {
                 toggleOutfitModal(e, CATEGORRY.CLOTHING);
               }}
-            />
+            >
+              apparel
+            </CategoriesItem>
             <CategoriesItemTitle>의류</CategoriesItemTitle>
           </ButtonCategoriesContainer>
           <ButtonCategoriesContainer>
             <CategoriesItem
-              alt='categories'
               onClick={(e) => {
                 toggleOutfitModal(e, CATEGORRY.UPPER_LEFT);
               }}
-            />
+            >
+              checkroom
+            </CategoriesItem>
             <CategoriesItemTitle>왼쪽 위</CategoriesItemTitle>
           </ButtonCategoriesContainer>
           <ButtonCategoriesContainer>
             <CategoriesItem
-              alt='categories'
               onClick={(e) => {
                 toggleOutfitModal(e, CATEGORRY.UPPER_RIGHT);
               }}
-            />
+            >
+              checkroom
+            </CategoriesItem>
             <CategoriesItemTitle>오른쪽 위</CategoriesItemTitle>
           </ButtonCategoriesContainer>
           <ButtonCategoriesContainer>
             <CategoriesItem
-              alt='categories'
               onClick={(e) => {
                 toggleOutfitModal(e, CATEGORRY.BACKGROUND);
               }}
-            />
+            >
+              eco
+            </CategoriesItem>
             <CategoriesItemTitle>배경</CategoriesItemTitle>
           </ButtonCategoriesContainer>
           <ButtonCategoriesContainer>
             <CategoriesItem
-              alt='categories'
               onClick={(e) => {
                 toggleOutfitModal(e, CATEGORRY.LOWER_LEFT);
               }}
-            />
+            >
+              checkroom
+            </CategoriesItem>
             <CategoriesItemTitle>왼쪽 아래</CategoriesItemTitle>
           </ButtonCategoriesContainer>
           <ButtonCategoriesContainer>
             <CategoriesItem
-              alt='categories'
               onClick={(e) => {
                 toggleOutfitModal(e, CATEGORRY.LOWER_RIGHT);
               }}
-            />
+            >
+              checkroom
+            </CategoriesItem>
             <CategoriesItemTitle>오른쪽 아래</CategoriesItemTitle>
           </ButtonCategoriesContainer>
         </ButtonContainer>
@@ -188,12 +194,17 @@ const ButtonCategoriesContainer = styled.div`
   background-color: 'white';
 `;
 
-const CategoriesItem = styled.img`
+const CategoriesItem = styled.div`
+  padding: 1rem 0;
   border: none;
   border-radius: 0.5rem;
-  background-color: white;
+  background-color: #f9bc60;
   object-fit: contain;
   object-position: center;
+  font-family: 'Material Symbols Outlined', sans-serif;
+  font-size: 50px;
+  text-align: center;
+  color: white;
 `;
 
 const CategoriesItemTitle = styled.div`
