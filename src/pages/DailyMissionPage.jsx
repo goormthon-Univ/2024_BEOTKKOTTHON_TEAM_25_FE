@@ -145,9 +145,13 @@ const ElementWrapper = styled.main`
 `;
 
 const BlueBox = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   width: 20.3rem;
-  height: 130px;
+  height: 150px;
+  padding: 1rem 0.5rem;
   border-radius: 20px;
   background-color: ${(props) => props.theme.colors.blue};
   color: white;
@@ -162,9 +166,8 @@ const TipWrapper = styled.div`
 `;
 
 const DaliyMissionWrapper = styled.div`
-  position: absolute;
-  top: 25%;
   width: 100%;
+  padding-bottom: 1rem;
   text-align: center;
 `;
 
@@ -174,9 +177,7 @@ const DailyMissionText = styled.div`
 `;
 
 const MissionWrapper = styled.div`
-  position: absolute;
-  top: 55%;
-  width: 100%;
+  width: 90%;
   text-align: center;
 `;
 
@@ -186,6 +187,9 @@ const MissionText = styled.div`
 `;
 
 const ButtonWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 30px;
   margin-bottom: 30px;
 `;
