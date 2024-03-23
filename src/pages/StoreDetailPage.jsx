@@ -1,11 +1,14 @@
-import { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Header, Footer, Button } from '../components/common/layout';
 import Texture from '../assets/img/ScreenBackground.png';
+import { Button, Footer, Header } from '../components/common/layout';
+import CATEGORY from '../constants/category';
+import { getStoreItmesByCategory } from '../services/api/item';
+import { buyItem } from '../services/api/member';
 
 const customStyles = {
   content: {
@@ -22,21 +25,23 @@ const customStyles = {
   },
 };
 
-// 카테고리는 0부터 시작해야 하며 번호는 공백없이 연속되어야 함
-const category = {
-  0: '의류',
-  1: '왼쪽 위 소품',
-  2: '왼쪽 아래 소품',
-  3: '오른쪽 위 소품',
-  4: '오른쪽 아래 소품',
-  5: '배경',
-};
-
 const StoreDetailPage = () => {
   const { categoryId } = useParams();
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [items, setItems] = useState([]);
+  const [selectedItem, setSelectedItem] = useState({});
   const point = useSelector((state) => state.point);
+
+  const category = CATEGORY[Object.keys(CATEGORY)[categoryId]];
+
+  useEffect(() => {
+    const getItemsAndSetItems = async () => {
+      const response = await getStoreItmesByCategory(category.value);
+      setItems(response.filter((item) => item.isPurchased == false));
+    };
+    getItemsAndSetItems();
+  });
 
   const categoryIdNum = Number(categoryId);
 
@@ -48,8 +53,17 @@ const StoreDetailPage = () => {
     navigate(`/store/${(categoryIdNum + 1) % 6}`); // 현재 카테고리 + 1 % (카테고리 수)
   };
 
-  const handleModalButtonClick = () => {
+  const handleBuyYesButtonClick = async () => {
+    await buyItem(selectedItem.itemId);
+    setIsModalOpen(false);
+  };
+
+  const handleItemClick = (item) => {
+    if (item.isPurchased) {
+      console.error('이미 구매한 아이템입니다!'); // TODO: 이미 보유한 아이템 클릭 안되게 막아야 함
+    }
     setIsModalOpen(true);
+    setSelectedItem(item);
   };
 
   const handleCloseModal = () => {
@@ -71,32 +85,39 @@ const StoreDetailPage = () => {
         <ProductContainer>
           <CategoryContainer>
             <LeftIcon onClick={handleLeftCategoryClick}>navigate_before</LeftIcon>
-            <CategoryTitle>{category[categoryId]}</CategoryTitle>
+            <CategoryTitle>{category.storeText}</CategoryTitle>
             <RightIcon onClick={handleRightCategoryClick}>navigate_next</RightIcon>
           </CategoryContainer>
           <ItemListContainer>
             <ItemList>
-              <ItemContainer onClick={handleModalButtonClick}>
-                <ItemImg src={'아이템 이미지'} alt='item' />
-                <PriceWrapper>
-                  <PriceIcon>stars</PriceIcon>
-                  <PriceText>70</PriceText>
-                </PriceWrapper>
-              </ItemContainer>
+              {items.map((item) => (
+                <ItemContainer key={item.itemId} onClick={() => handleItemClick(item)}>
+                  <ItemImg src={item.imageUrl} alt='item' />
+                  <PriceWrapper>
+                    <PriceIcon>stars</PriceIcon>
+                    <PriceText>{item.price}</PriceText>
+                  </PriceWrapper>
+                </ItemContainer>
+              ))}
             </ItemList>
           </ItemListContainer>
         </ProductContainer>
         <Footer />
         <Modal isOpen={isModalOpen} onRequestClose={handleCloseModal} style={customStyles}>
           <ModalText>
-            <ModalBoldText>초록색 티셔츠</ModalBoldText>를{'\n'} 구매하시겠습니까?
+            <ModalBoldText>{selectedItem.name}</ModalBoldText>를{'\n'} 구매하시겠습니까?
           </ModalText>
           <BuyItemPriceWrapper>
             <BuyItemPriceIcon />
-            <BuyItemPriceText>-70</BuyItemPriceText>
+            <BuyItemPriceText>-{selectedItem.price}</BuyItemPriceText>
           </BuyItemPriceWrapper>
           <ModalButtonWrapper>
-            <Button $bgColor={'blue'} $textColor={'white'} size={'medium'}>
+            <Button
+              $bgColor={'blue'}
+              $textColor={'white'}
+              size={'medium'}
+              onClick={handleBuyYesButtonClick}
+            >
               예
             </Button>
             <Button
@@ -242,7 +263,8 @@ const ItemList = styled.ul`
 `;
 
 const ItemContainer = styled.button`
-  position: relative;
+  display: flex;
+  flex-direction: column;
   width: 100px;
   height: 100px;
   padding: 0;
@@ -251,25 +273,20 @@ const ItemContainer = styled.button`
   border-radius: 0.9rem;
   background-color: white;
   text-align: center;
+  align-items: center;
+  padding: 0.5rem;
 `;
 
 const ItemImg = styled.img`
-  display: block;
-  position: absolute;
-  margin: auto;
-  max-width: 100%;
-  object-fit: contain;
-  bottom: 0;
+  margin: 0 auto;
+  width: 65px;
 `;
 
 const PriceWrapper = styled.div`
-  position: absolute;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  bottom: 0;
-  left: 25%;
 `;
 
 const PriceText = styled.div`

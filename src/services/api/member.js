@@ -17,5 +17,17 @@ export const toggleItemUsing = async (itemId) => {
     },
   );
 
-  console.log(response.data);
+  return response;
+};
+
+export const buyItem = async (itemId) => {
+  const response = await api.post(
+    `/api/v1/members/me/items/${itemId}`,
+    {},
+    {
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
+    },
+  );
+  console.log(response);
+  return response;
 };
