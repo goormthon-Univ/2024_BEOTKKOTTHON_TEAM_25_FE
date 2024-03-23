@@ -4,15 +4,17 @@ import {
   DailyMissonPage,
   FriendsListPage,
   FriendsPage,
+  FriendsProfilePage,
   HomePage,
   LoginPage,
   MyPage,
+  MyRoomPage,
   OnboardingPage,
   RecordCategories,
   RecordsPage,
   RegisterPage,
-  StorePage,
   StoreDetailPage,
+  StorePage,
 } from './pages';
 
 const Router = () => {
@@ -23,10 +25,12 @@ const Router = () => {
         <Route path='/daily-mission' element={<DailyMissonPage />} />
         <Route path='/friends-list' element={<FriendsListPage />} />
         <Route path='/friends' element={<FriendsPage />} />
+        <Route path='/friends-profile' element={<FriendsProfilePage />} />
         <Route path='/' element={<div>🌏 온 지구 : Own Earth 🌏</div>} />
         <Route path='/home' element={<HomePage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/mypage' element={<MyPage />} />
+        <Route path='/myroom' element={<MyRoomPage />} />
         <Route path='/onboarding' element={<OnboardingPage />} />
         <Route path='/record-categories' element={<RecordCategories />} />
         <Route path='/records' element={<RecordsPage />} />
