@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
-import { Header, Button } from '../components/common/layout';
+import { useNavigate } from 'react-router-dom';
 import Texture from '../assets/img/ScreenBackground.png';
 import EarthCharacter from '../assets/img/loadingfailure.png';
+import { Button, Header } from '../components/common/layout';
 
 const LoadingFailure = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Header />
@@ -14,7 +16,7 @@ const LoadingFailure = () => {
           tip 1 ) 본인이 찍은 사진을 확인해주세요!{'\n'}tip 2 )관련된 사물이 잘 나오게 촬영해주세요!
         </TipText>
         <CharacterImg src={EarthCharacter} />
-        <RegisterBtnWrapper>
+        <RegisterBtnWrapper onClick={() => navigate('/daily-mission')}>
           <Button $bgColor={'green'} $textColor={'white'} size={'large'}>
             확인
           </Button>
