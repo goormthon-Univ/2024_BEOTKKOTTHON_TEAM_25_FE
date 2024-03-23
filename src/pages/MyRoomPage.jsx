@@ -2,15 +2,19 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { Header, Modal } from '../components/common/layout';
 import Texture from '../assets/img/ScreenBackground.png';
 import Earth from '../assets/imgLayer/earth.png';
+import MyRoomModal from '../components/MyRoomModal';
+import { Header } from '../components/common/layout';
+import CATEGORRY from '../constants/category';
 
 const MyRoomPage = () => {
   const [isOutfitOpen, setOutfitOpen] = useState(false);
+  const [category, setCategory] = useState(CATEGORRY.CLOTHING);
   const point = useSelector((state) => state.point);
 
-  const toggleOutfitModal = () => {
+  const toggleOutfitModal = (event, category) => {
+    setCategory(category);
     setOutfitOpen(!isOutfitOpen);
   };
 
@@ -29,42 +33,66 @@ const MyRoomPage = () => {
         </CharacterContainer>
         <ButtonContainer>
           <ButtonCategoriesContainer>
-            <CategoriesItem alt='categories' onClick={toggleOutfitModal} />
+            <CategoriesItem
+              alt='categories'
+              onClick={(e) => {
+                toggleOutfitModal(e, CATEGORRY.CLOTHING);
+              }}
+            />
             <CategoriesItemTitle>의류</CategoriesItemTitle>
           </ButtonCategoriesContainer>
           <ButtonCategoriesContainer>
-            <CategoriesItem alt='categories' onClick={toggleOutfitModal} />
+            <CategoriesItem
+              alt='categories'
+              onClick={(e) => {
+                toggleOutfitModal(e, CATEGORRY.UPPER_LEFT);
+              }}
+            />
             <CategoriesItemTitle>왼쪽 위</CategoriesItemTitle>
           </ButtonCategoriesContainer>
           <ButtonCategoriesContainer>
-            <CategoriesItem alt='categories' onClick={toggleOutfitModal} />
+            <CategoriesItem
+              alt='categories'
+              onClick={(e) => {
+                toggleOutfitModal(e, CATEGORRY.UPPER_RIGHT);
+              }}
+            />
             <CategoriesItemTitle>오른쪽 위</CategoriesItemTitle>
           </ButtonCategoriesContainer>
           <ButtonCategoriesContainer>
-            <CategoriesItem alt='categories' onClick={toggleOutfitModal} />
+            <CategoriesItem
+              alt='categories'
+              onClick={(e) => {
+                toggleOutfitModal(e, CATEGORRY.BACKGROUND);
+              }}
+            />
             <CategoriesItemTitle>배경</CategoriesItemTitle>
           </ButtonCategoriesContainer>
           <ButtonCategoriesContainer>
-            <CategoriesItem alt='categories' onClick={toggleOutfitModal} />
+            <CategoriesItem
+              alt='categories'
+              onClick={(e) => {
+                toggleOutfitModal(e, CATEGORRY.LOWER_LEFT);
+              }}
+            />
             <CategoriesItemTitle>왼쪽 아래</CategoriesItemTitle>
           </ButtonCategoriesContainer>
           <ButtonCategoriesContainer>
-            <CategoriesItem alt='categories' onClick={toggleOutfitModal} />
+            <CategoriesItem
+              alt='categories'
+              onClick={(e) => {
+                toggleOutfitModal(e, CATEGORRY.LOWER_RIGHT);
+              }}
+            />
             <CategoriesItemTitle>오른쪽 아래</CategoriesItemTitle>
           </ButtonCategoriesContainer>
         </ButtonContainer>
       </Layout>
-      <Modal isOpen={isOutfitOpen} onRequestClose={toggleOutfitModal}>
-        <ModalText>
-          카테고리 텍스트<CheckIcon onClick={toggleOutfitModal}>check</CheckIcon>
-        </ModalText>
-        <ModalContainer>
-          <ModalItemContainer>
-            <Item src={'아이템 이미지'} alt='item' />
-            <ItemTitle>아이템 텍스트</ItemTitle>
-          </ModalItemContainer>
-        </ModalContainer>
-      </Modal>
+      <MyRoomModal
+        isOpen={isOutfitOpen}
+        toggleOutfitModal={toggleOutfitModal}
+        category={category}
+      />
     </>
   );
 };
@@ -169,63 +197,6 @@ const CategoriesItem = styled.img`
 `;
 
 const CategoriesItemTitle = styled.div`
-  padding: 0.2rem 0;
-  font-family: 'SUITE-SemiBold', sans-serif;
-  font-size: 1.1rem;
-  text-align: center;
-  color: black;
-`;
-
-const ModalText = styled.div`
-  padding: 1rem 1.5rem;
-  font-family: 'SUITE-SemiBold', sans-serif;
-  font-size: 1.3rem;
-  text-align: left;
-  color: #000000;
-  line-height: 2rem;
-  white-space: pre-wrap; // \n 적용하기
-`;
-
-const CheckIcon = styled.button`
-  position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  width: 15%;
-  border: none;
-  background: none;
-  font-family: 'Material Symbols Outlined', sans-serif;
-  font-size: 2rem;
-  text-align: center;
-  color: ${(props) => props.theme.colors.green};
-  cursor: pointer;
-`;
-
-const ModalContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  padding-bottom: 5rem;
-`;
-
-const ModalItemContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: calc(30% - 0.3rem); /* 3개씩 배치, 간격 고려 */
-  max-height: 100%;
-  margin-top: 0.5rem;
-  background-color: 'white';
-`;
-
-const Item = styled.img`
-  border: none;
-  border-radius: 0.5rem;
-  background-color: white;
-  object-fit: contain;
-  object-position: center;
-`;
-
-const ItemTitle = styled.div`
   padding: 0.2rem 0;
   font-family: 'SUITE-SemiBold', sans-serif;
   font-size: 1.1rem;
