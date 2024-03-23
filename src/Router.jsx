@@ -8,7 +8,8 @@ import {
   LoginPage,
   MyPage,
   OnboardingPage,
-  Recordspage,
+  RecordCategories,
+  RecordsPage,
   RegisterPage,
   StorePage,
   StoreDetailPage,
@@ -27,7 +28,8 @@ const Router = () => {
         <Route path='/login' element={<LoginPage />} />
         <Route path='/mypage' element={<MyPage />} />
         <Route path='/onboarding' element={<OnboardingPage />} />
-        <Route path='/records' element={<Recordspage />} />
+        <Route path='/record-categories' element={<RecordCategories />} />
+        <Route path='/records' element={<RecordsPage />} />
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/store' element={<StorePage />} />
         <Route path='/store/:categoryId' element={<StoreDetailPage />} />

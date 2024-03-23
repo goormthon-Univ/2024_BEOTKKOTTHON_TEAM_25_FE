@@ -4,7 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 
-import { loadCompletedMissions } from '../store/slice';
+import {
+  loadCompletedMissions,
+  setCompletedMissionCategory,
+  setCompletedMissionMonth,
+} from '../store/slice';
 
 import { Header, Footer } from '../components/common/layout';
 import character from '../assets/img/record-character.png';
@@ -24,6 +28,22 @@ const customStyles = {
   },
 };
 
+const month = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+const completedCategoryText = {
+  SAVE_WATER: '물 절약하기',
+  RECYCLE: '분리수거하기',
+  SAVE_ENERGY: '전기 절약하기',
+  REDUCE_TRASH: '일회용품 줄이기',
+};
+
+const completedCategoryIcon = {
+  SAVE_WATER: 'water_drop',
+  RECYCLE: 'recycling',
+  SAVE_ENERGY: 'bolt',
+  REDUCE_TRASH: 'eco',
+};
+
 Modal.setAppElement('#root');
 
 function Recordspage() {
@@ -35,12 +55,31 @@ function Recordspage() {
   }, []);
 
   const completedMissions = useSelector((state) => state.completedMissions);
+  const completedMissionMonth = useSelector((state) => state.completedMissionMonth);
+  const completedMissionCategory = useSelector((state) => state.completedMissionCategory);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState('');
   const [selectedClearYear, setSelectedClearYear] = useState('');
   const [selectedClearMonth, setSelectedClearMonth] = useState('');
   const [selectedClearDay, setSelectedClearDay] = useState('');
+
+  const handleDateClick = () => {
+    dispatch(setCompletedMissionCategory(''));
+    dispatch(loadCompletedMissions());
+  };
+
+  const handleBeforeMonthClick = () => {
+    dispatch(setCompletedMissionCategory(''));
+    dispatch(setCompletedMissionMonth(month[(completedMissionMonth - 2 + 12) % 12]));
+    dispatch(loadCompletedMissions());
+  };
+
+  const handleAfterMonthClick = () => {
+    dispatch(setCompletedMissionCategory(''));
+    dispatch(setCompletedMissionMonth(month[completedMissionMonth % 12]));
+    dispatch(loadCompletedMissions());
+  };
 
   const openModal = (mission) => {
     setSelectedImage(mission.imageUrl);
@@ -55,15 +94,28 @@ function Recordspage() {
       <Header />
       <Layout>
         <MonthlySection>
-          <BeforeIcon onClick={'이전달 버튼'} />
-          <MonthlyTitle>3월의 지구</MonthlyTitle>
-          <AfterIcon onClick={'다음달 버튼'} />
+          {/* <BeforeIcon onClick={() => handleBeforeMonthClick()} />
+          <MonthlyTitle>{completedMissionMonth}월의 지구</MonthlyTitle>
+          <AfterIcon onClick={() => handleAfterMonthClick()} /> */}
+          {completedMissionCategory === '' ? (
+            <>
+              <BeforeIcon onClick={() => handleBeforeMonthClick()} />
+              <MonthlyTitle>{completedMissionMonth}월의 지구</MonthlyTitle>
+              <AfterIcon onClick={() => handleAfterMonthClick()} />
+            </>
+          ) : (
+            <>
+              <Icon>{completedCategoryIcon[completedMissionCategory]}</Icon>
+              <MonthlyTitle>{completedCategoryText[completedMissionCategory]}</MonthlyTitle>
+              <Icon>{completedCategoryIcon[completedMissionCategory]}</Icon>
+            </>
+          )}
         </MonthlySection>
         <SortWrapper>
           <SortSection>
             <SortByDateBtn>
               <SortByDateIcon />
-              <SortByDateTitle>날짜별</SortByDateTitle>
+              <SortByDateTitle onClick={() => handleDateClick()}>날짜별</SortByDateTitle>
             </SortByDateBtn>
             <SortByTypeBtn>
               <SortByTypeIcon />
@@ -116,6 +168,12 @@ const MonthlySection = styled.div`
   text-align: center;
   line-height: 56px;
   justify-content: center;
+`;
+
+const Icon = styled.div`
+  font-family: 'Material Symbols Outlined';
+  font-size: 2rem;
+  color: ${(props) => props.theme.colors.green};
 `;
 
 const BeforeIcon = styled.div`
@@ -224,7 +282,6 @@ const ImgSection = styled.div`
 const ImgList = styled.ul`
   display: flex;
   padding: 0;
-  padding-top: 20px;
   margin: 0;
   list-style-type: none;
   flex-wrap: wrap;

@@ -1,59 +1,87 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+
+import { setCompletedMissionCategory, setCompletedMissionMonth } from '../store/slice';
 
 import { Header, Footer } from '../components/common/layout';
 import Texture from '../assets/img/ScreenBackground.png';
 
 function RecordCategories() {
+  const completedMissionMonth = useSelector((state) => state.completedMissionMonth);
+
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const handleDateClick = () => {
+    dispatch(setCompletedMissionCategory(''));
+    navigate('/records');
+  };
+
+  const handleCategoryClick = (category) => {
+    dispatch(setCompletedMissionCategory(category));
+    navigate('/records');
+  };
+
+  const handleBeforeMonthClick = () => {
+    dispatch(setCompletedMissionCategory(''));
+    dispatch(setCompletedMissionMonth((completedMissionMonth - 1 + 12) % 12));
+  };
+
+  const handleAfterMonthClick = () => {
+    dispatch(setCompletedMissionCategory(''));
+    dispatch(setCompletedMissionMonth((completedMissionMonth + 1) % 12));
+  };
 
   return (
     <>
       <Header />
       <Layout>
         <MonthlySection>
-          <BeforeIcon />
-          <MonthlyTitle>3월의 지구</MonthlyTitle>
-          <AfterIcon />
+          <BeforeIcon onClick={() => handleBeforeMonthClick()} />
+          <MonthlyTitle>{completedMissionMonth}월의 지구</MonthlyTitle>
+          <AfterIcon onClick={() => handleAfterMonthClick()} />
         </MonthlySection>
         <SortWrapper>
           <SortSection>
             <SortByDateWrapper>
               <SortByDateIcon />
-              <SortByDateTitle onClick={() => navigate('/records')}>날짜별</SortByDateTitle>
+              <SortByDateTitle onClick={() => handleDateClick()}>날짜별</SortByDateTitle>
             </SortByDateWrapper>
             <SortByTypeWrapper>
               <SortByTypeIcon />
-              <SortByTypeTitle>종류별</SortByTypeTitle>
+              <SortByTypeTitle onClick={() => navigate('/record-categories')}>
+                종류별
+              </SortByTypeTitle>
             </SortByTypeWrapper>
           </SortSection>
         </SortWrapper>
         <TypeWrapper>
           <TypeSection>
             <TypeList>
-              <BlueBox>
-                <BlueBoxWrapper onClick={() => navigate('/record-missions')}>
+              <BlueBox onClick={() => handleCategoryClick('SAVE_WATER')}>
+                <BlueBoxWrapper>
                   <WaterIcon />
                   <TypeText>물 절약하기</TypeText>
                   <Move />
                 </BlueBoxWrapper>
               </BlueBox>
-              <BlueBox>
-                <BlueBoxWrapper onClick={() => navigate('/record-missions')}>
+              <BlueBox onClick={() => handleCategoryClick('RECYCLE')}>
+                <BlueBoxWrapper>
                   <RecycleIcon />
                   <TypeText>분리수거 하기</TypeText>
                   <Move />
                 </BlueBoxWrapper>
               </BlueBox>
-              <BlueBox>
-                <BlueBoxWrapper onClick={() => navigate('/record-missions')}>
+              <BlueBox onClick={() => handleCategoryClick('SAVE_ENERGY')}>
+                <BlueBoxWrapper>
                   <ThunderIcon />
                   <TypeText>전기 절약하기</TypeText>
                   <Move />
                 </BlueBoxWrapper>
               </BlueBox>
-              <BlueBox>
-                <BlueBoxWrapper onClick={() => navigate('/record-missions')}>
+              <BlueBox onClick={() => handleCategoryClick('REDUCE_TRASH')}>
+                <BlueBoxWrapper>
                   <LeafIcon />
                   <TypeText>일회용품 줄이기</TypeText>
                   <Move />
@@ -83,21 +111,25 @@ const MonthlySection = styled.div`
   justify-content: center;
 `;
 
-const BeforeIcon = styled.div`
+const BeforeIcon = styled.button`
   font-family: 'Material Symbols Outlined';
   font-size: 36px;
   &:before {
     content: 'navigate_before';
   }
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
   color: ${(props) => props.theme.colors.green};
 `;
 
-const AfterIcon = styled.div`
+const AfterIcon = styled.button`
   font-family: 'Material Symbols Outlined';
   font-size: 36px;
   &:before {
     content: 'navigate_next';
   }
+  background-color: rgba(255, 255, 255, 0);
+  border: none;
   color: ${(props) => props.theme.colors.green};
 `;
 
@@ -183,7 +215,6 @@ const TypeSection = styled.div`
 
 const TypeList = styled.ul`
   padding: 0;
-  padding-top: 20px;
   margin: 0;
   list-style-type: none;
   text-align: center;

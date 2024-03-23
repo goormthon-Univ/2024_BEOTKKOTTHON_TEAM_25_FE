@@ -24,12 +24,32 @@ export async function changeDailyMission() {
   return { missionId, dailyMission };
 }
 
-export async function getCompletedMissions() {
-  const response = await axios.get('/api/v1/members/me/missions/completed?yearMonth=2024-03', {
-    headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
-  });
-
-  const completedMissions = response.data.data;
-
-  return completedMissions;
+export async function getCompletedMissions(month, category) {
+  if (category !== '') {
+    const response = await axios.get(`/api/v1/members/me/missions/completed?category=${category}`, {
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
+    });
+    const completedMissions = response.data.data;
+    return completedMissions;
+  }
+  if (category === '') {
+    if (month >= 1 && month <= 9) {
+      const response = await axios.get(
+        `/api/v1/members/me/missions/completed?yearMonth=2024-0${month}`,
+        {
+          headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
+        },
+      );
+      const completedMissions = response.data.data;
+      return completedMissions;
+    }
+    const response = await axios.get(
+      `/api/v1/members/me/missions/completed?yearMonth=2024-${month}`,
+      {
+        headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
+      },
+    );
+    const completedMissions = response.data.data;
+    return completedMissions;
+  }
 }

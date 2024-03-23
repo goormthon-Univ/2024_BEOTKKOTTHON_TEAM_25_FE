@@ -24,6 +24,8 @@ const { actions, reducer } = createSlice({
     missionId: 0,
     dailyMission: '',
     completedMissions: [],
+    completedMissionMonth: 3,
+    completedMissionCategory: '',
     accumulatedPoint: 0,
     completedMissionCount: 0,
     completionRate: 0,
@@ -110,6 +112,20 @@ const { actions, reducer } = createSlice({
       };
     },
 
+    setCompletedMissionMonth(state, { payload: completedMissionMonth }) {
+      return {
+        ...state,
+        completedMissionMonth,
+      };
+    },
+
+    setCompletedMissionCategory(state, { payload: completedMissionCategory }) {
+      return {
+        ...state,
+        completedMissionCategory,
+      };
+    },
+
     setAccumulatedPoint(state, { payload: accumulatedPoint }) {
       return {
         ...state,
@@ -152,6 +168,8 @@ export const {
   setMissionId,
   setDailyMission,
   setCompletedMissions,
+  setCompletedMissionMonth,
+  setCompletedMissionCategory,
   setAccumulatedPoint,
   setCompletedMissionCount,
   setCompletionRate,
@@ -212,8 +230,13 @@ export function loadChangeDailyMission() {
 }
 
 export function loadCompletedMissions() {
-  return async (dispatch) => {
-    const completedMissions = await getCompletedMissions();
+  return async (dispatch, getState) => {
+    const { completedMissionMonth, completedMissionCategory } = getState();
+
+    const completedMissions = await getCompletedMissions(
+      completedMissionMonth,
+      completedMissionCategory,
+    );
 
     dispatch(setCompletedMissions(completedMissions));
   };
