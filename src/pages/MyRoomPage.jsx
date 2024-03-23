@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import { Header, Modal } from '../components/common/layout';
@@ -7,6 +8,7 @@ import Earth from '../assets/imgLayer/earth.png';
 
 const MyRoomPage = () => {
   const [isOutfitOpen, setOutfitOpen] = useState(false);
+  const point = useSelector((state) => state.point);
 
   const toggleOutfitModal = () => {
     setOutfitOpen(!isOutfitOpen);
@@ -14,7 +16,7 @@ const MyRoomPage = () => {
 
   return (
     <>
-      <Header />
+      <Header point={point} />
       <Layout>
         <CharacterContainer>
           <CharacterBackgroundImg />
@@ -58,7 +60,7 @@ const MyRoomPage = () => {
         </ModalText>
         <ModalContainer>
           <ModalItemContainer>
-            <Item src={'아이템이미지'} alt='item' />
+            <Item src={'아이템 이미지'} alt='item' />
             <ItemTitle>아이템 텍스트</ItemTitle>
           </ModalItemContainer>
         </ModalContainer>
@@ -210,6 +212,7 @@ const ModalItemContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: calc(30% - 0.3rem); /* 3개씩 배치, 간격 고려 */
+  max-height: 100%;
   margin-top: 0.5rem;
   background-color: 'white';
 `;
