@@ -6,9 +6,7 @@ import { getEarthStatus, getMyPoint } from '../services/api/home';
 import { changeDailyMission, getCompletedMissions, getDailyMission } from '../services/api/mission';
 
 import {
-  getMyMonthlyFriendsData,
-  getFriendsMonthlyFriendsData,
-  getFriendDetailPageData,
+  getFriendDetailPageData
 } from '../services/api/friends';
 
 
