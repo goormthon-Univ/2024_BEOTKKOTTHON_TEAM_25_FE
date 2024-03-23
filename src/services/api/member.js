@@ -7,3 +7,15 @@ export const getMyInventory = async (memberId, category) => {
 
   return response.data.data;
 };
+
+export const toggleItemUsing = async (itemId) => {
+  const response = await api.patch(
+    `/api/v1/members/me/items/${itemId}/using`,
+    {},
+    {
+      headers: { Authorization: 'Bearer ' + localStorage.getItem('accessToken') },
+    },
+  );
+
+  console.log(response.data);
+};
