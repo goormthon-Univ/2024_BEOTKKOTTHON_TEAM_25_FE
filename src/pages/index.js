@@ -1,4 +1,3 @@
-export { default as CharacterNameSettingPage } from './CharacterNameSettingPage';
 export { default as DailyMissonPage } from './DailyMissionPage';
 export { default as FriendsListPage } from './FriendsListPage';
 export { default as FriendsPage } from './FriendsPage';
@@ -13,6 +12,5 @@ export { default as MyRoomPage } from './MyRoomPage';
 export { default as OnboardingPage } from './OnboardingPage';
 export { default as RecordCategories } from './RecordCategories';
 export { default as RecordsPage } from './RecordsPage';
-export { default as RegisterPage } from './RegisterPage';
 export { default as StorePage } from './StorePage';
 export { default as StoreDetailPage } from './StoreDetailPage';
