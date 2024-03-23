@@ -1,6 +1,7 @@
 # 2024_BEOTKKOTTHON_TEAM_25_FE
 
-###🌏 온 지구 : Own Earth 🌏
+### 🌏 온 지구 : Own Earth 🌏
+
 매일 환경 보호 미션을 수행하고 꾸미는 나의 지구
 
 ![온지구 포스터](src/assets/img/own-earth-poster.jpg)
